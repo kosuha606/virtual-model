@@ -1,6 +1,6 @@
 <?php
 
-namespace kosuha606\EnvironmentModel\Example\Shop;
+namespace kosuha606\EnvironmentModel\Example\Product;
 
 use kosuha606\EnvironmentModel\EnvironmentModel;
 use kosuha606\EnvironmentModel\EnvironmentModelManager;
