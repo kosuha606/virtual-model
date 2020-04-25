@@ -9,7 +9,7 @@
 ## Установка
 Установить пакет можно через композер:
 ```bash
-$ composer require kosuha606/environment-model
+$ composer require kosuha606/environment-models
 ```
 
 ## Быстрый старт
