@@ -125,7 +125,12 @@ abstract class EnvironmentModel
         $getterName = $this->normalizeEnvMethod('get_'.$snakeName);
 
         if (method_exists($this, $getterName)) {
-            return $this->$getterName;
+            return $this->$getterName();
+        }
+
+        $commonGetterName = $this->normalizeCommonMethod('get_'.$snakeName);
+        if (method_exists($this, $commonGetterName)) {
+            return $this->$commonGetterName();
         }
 
         return $this->attributes[$snakeName];
@@ -144,6 +149,11 @@ abstract class EnvironmentModel
 
         if (method_exists($this, $setterName)) {
             return $this->$setterName($value);
+        }
+
+        $commonSetterName = $this->normalizeCommonMethod('set_'.$snakeName);
+        if (method_exists($this, $commonSetterName)) {
+            return $this->$commonSetterName($value);
         }
 
         return null;
@@ -168,6 +178,15 @@ abstract class EnvironmentModel
     public function normalizeEnvMethod($snakeString)
     {
         return StringHelper::normalizeEnvMethod($snakeString, $this->environment);
+    }
+
+    /**
+     * @param $snakeString
+     * @return mixed|string
+     */
+    public function normalizeCommonMethod($snakeString)
+    {
+        return StringHelper::snakeToCamel($snakeString);
     }
 
     /**

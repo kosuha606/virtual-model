@@ -1,5 +1,7 @@
 <?php
 
+use kosuha606\EnvironmentModel\EnvironmentModelManager;
+use kosuha606\EnvironmentModel\Example\Shop\Product;
 use kosuha606\EnvironmentModel\Example\Shop\ProductsStatistic;
 use PHPUnit\Framework\TestCase;
 
@@ -22,5 +24,20 @@ class ProductTest extends TestCase
 
         $averageOnePrice = $ps->averageOneProductPrice();
         $this->assertEquals(1.5, $averageOnePrice);
+    }
+
+    public function testOneProduct()
+    {
+        /** @var Product $product */
+        $product = EnvironmentModelManager::getInstance()->getProvider()->one(Product::class, [
+            'where' => [
+                ['=', 'id', 1]
+            ]
+        ]);
+
+        $category = $product->getCategory();
+
+        $this->assertEquals('Апельсины', $product->name);
+        $this->assertEquals('Фрукты', $category->name);
     }
 }
