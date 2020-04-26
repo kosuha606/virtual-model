@@ -2,13 +2,13 @@
 
 namespace kosuha606\EnvironmentModel\Example\Shop\Model;
 
-use kosuha606\EnvironmentModel\EnvironmentModel;
+use kosuha606\EnvironmentModel\VirtualModel;
 
 /**
  * Пользователь
  * @package kosuha606\Model\iteration2\model
  */
-class User extends EnvironmentModel
+class User extends VirtualModel
 {
     public $id;
 

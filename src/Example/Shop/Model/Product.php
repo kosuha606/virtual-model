@@ -4,7 +4,7 @@ namespace kosuha606\EnvironmentModel\Example\Shop\Model;
 
 
 
-use kosuha606\EnvironmentModel\EnvironmentModel;
+use kosuha606\EnvironmentModel\VirtualModel;
 use kosuha606\EnvironmentModel\Example\Shop\ServiceManager;
 use kosuha606\EnvironmentModel\Example\Shop\Services\ProductService;
 
@@ -12,7 +12,7 @@ use kosuha606\EnvironmentModel\Example\Shop\Services\ProductService;
  * Продукт
  * @property $salePrice
  */
-class Product extends EnvironmentModel
+class Product extends VirtualModel
 {
     /** @var ProductService */
     private $productService;

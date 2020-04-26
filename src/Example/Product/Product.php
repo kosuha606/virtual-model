@@ -2,8 +2,8 @@
 
 namespace kosuha606\EnvironmentModel\Example\Product;
 
-use kosuha606\EnvironmentModel\EnvironmentModel;
-use kosuha606\EnvironmentModel\EnvironmentModelManager;
+use kosuha606\EnvironmentModel\VirtualModel;
+use kosuha606\EnvironmentModel\VirtualModelManager;
 
 /**
  * @property $amount
@@ -11,7 +11,7 @@ use kosuha606\EnvironmentModel\EnvironmentModelManager;
  * @property $category_id
  * @property $name
  */
-class Product extends EnvironmentModel
+class Product extends VirtualModel
 {
     public function attributes(): array
     {
@@ -28,16 +28,14 @@ class Product extends EnvironmentModel
 
     /**
      * @return Category|null
+     * @throws \Exception
      */
     public function getCategory()
     {
-        /** @var Category $category */
-        $category = EnvironmentModelManager::getInstance()->getProvider()->one(Category::class, [
+        return Category::one([
             'where' => [
                 ['=', 'id', $this->category_id]
             ]
         ]);
-
-        return $category;
     }
 }

@@ -6,8 +6,13 @@ namespace kosuha606\EnvironmentModel;
  * @description Провайдер для работы с сущностями модели
  * @package kosuha606\EnvironmentModel
  */
-abstract class EnvironmentModelProvider
+abstract class VirtualModelProvider
 {
+    /**
+     * Тип провайдера по умолчанию
+     */
+    const DEFAULT_PROVIDER_TYPE = 'storage';
+
     /**
      * @return string
      */
@@ -16,11 +21,11 @@ abstract class EnvironmentModelProvider
     /**
      * @param $modelClass
      * @param array $attributes
-     * @return EnvironmentModel
+     * @return VirtualModel
      */
     public function buildModel($modelClass, $attributes = [])
     {
-        /** @var EnvironmentModel $instance */
+        /** @var VirtualModel $instance */
         $instance = new $modelClass($this->environemnt());
         $instance->setAttributes($attributes);
 
@@ -30,7 +35,7 @@ abstract class EnvironmentModelProvider
     /**
      * @param $modelClass
      * @param $config
-     * @return EnvironmentModel
+     * @return VirtualModel
      */
     public function one($modelClass, $config)
     {
@@ -77,4 +82,12 @@ abstract class EnvironmentModelProvider
      * @return mixed
      */
     abstract protected function findMany($modelClass, $config);
+
+    /**
+     * @return string
+     */
+    public function type()
+    {
+        return self::DEFAULT_PROVIDER_TYPE;
+    }
 }

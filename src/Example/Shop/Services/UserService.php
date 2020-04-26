@@ -3,7 +3,7 @@
 namespace kosuha606\EnvironmentModel\Example\Shop\Services;
 
 
-use kosuha606\EnvironmentModel\EnvironmentModelManager;
+use kosuha606\EnvironmentModel\VirtualModelManager;
 use kosuha606\EnvironmentModel\Example\Shop\Model\User;
 
 class UserService
@@ -13,7 +13,7 @@ class UserService
 
     public function login($userId)
     {
-        $user = EnvironmentModelManager::getInstance()->getProvider()->one(User::class, [
+        $user = VirtualModelManager::getInstance()->getProvider()->one(User::class, [
             'where' => [
                 ['=', 'id', $userId]
             ]

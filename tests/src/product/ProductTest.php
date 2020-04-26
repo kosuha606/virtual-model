@@ -1,6 +1,6 @@
 <?php
 
-use kosuha606\EnvironmentModel\EnvironmentModelManager;
+use kosuha606\EnvironmentModel\VirtualModelManager;
 use kosuha606\EnvironmentModel\Example\MemoryModelProvider;
 use kosuha606\EnvironmentModel\Example\Product\Category;
 use kosuha606\EnvironmentModel\Example\Product\Product;
@@ -60,7 +60,7 @@ class ProductTest extends TestCase
             ]
         ];
 
-        EnvironmentModelManager::getInstance()->setProvider($this->provider);
+        VirtualModelManager::getInstance()->setProvider($this->provider);
     }
 
     public function tearDown()
@@ -84,10 +84,13 @@ class ProductTest extends TestCase
         $this->assertEquals(1.5, $averageOnePrice);
     }
 
+    /**
+     * @throws Exception
+     */
     public function testOneProduct()
     {
         /** @var Product $product */
-        $product = EnvironmentModelManager::getInstance()->getProvider()->one(Product::class, [
+        $product = Product::one([
             'where' => [
                 ['=', 'id', 1]
             ]

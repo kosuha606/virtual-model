@@ -2,9 +2,9 @@
 
 namespace kosuha606\EnvironmentModel\Example\Product;
 
-use kosuha606\EnvironmentModel\EnvironmentModel;
+use kosuha606\EnvironmentModel\VirtualModel;
 
-class Category extends EnvironmentModel
+class Category extends VirtualModel
 {
     public function attributes(): array
     {

@@ -2,7 +2,7 @@
 
 namespace kosuha606\EnvironmentModel\Example\Product;
 
-use kosuha606\EnvironmentModel\EnvironmentModelManager;
+use kosuha606\EnvironmentModel\VirtualModelManager;
 
 class ProductsStatistic
 {
@@ -14,7 +14,7 @@ class ProductsStatistic
     public function totalProductsAmount()
     {
         /** @var Product[] $products */
-        $products = EnvironmentModelManager::getInstance()->getProvider()->many(Product::class, [
+        $products = Product::many([
             'where' => [
                 ['all']
             ]
@@ -35,7 +35,7 @@ class ProductsStatistic
     public function totalProductsPrice()
     {
         /** @var Product[] $products */
-        $products = EnvironmentModelManager::getInstance()->getProvider()->many(Product::class, [
+        $products = Product::many([
             'where' => [
                 ['all']
             ]

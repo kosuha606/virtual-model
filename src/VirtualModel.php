@@ -6,7 +6,7 @@ namespace kosuha606\EnvironmentModel;
  * Одна абстрактная модель
  * @package kosuha606\EnvironmentModel
  */
-abstract class EnvironmentModel
+abstract class VirtualModel
 {
     /**
      * @var string
@@ -25,6 +25,14 @@ abstract class EnvironmentModel
     abstract public function attributes(): array;
 
     /**
+     * @return string
+     */
+    public static function providerType()
+    {
+        return VirtualModelProvider::DEFAULT_PROVIDER_TYPE;
+    }
+
+    /**
      * @description Установить окружение в слой моделей
      * @param $environent
      */
@@ -34,7 +42,33 @@ abstract class EnvironmentModel
     }
 
     /**
-     * @return EnvironmentModel
+     * @param array $config
+     * @return mixed
+     * @throws \Exception
+     */
+    public static function one($config = [])
+    {
+        return VirtualModelManager::getInstance()
+            ->getProvider(static::providerType())
+            ->one(static::class, $config)
+        ;
+    }
+
+    /**
+     * @param array $config
+     * @return array
+     * @throws \Exception
+     */
+    public static function many($config = [])
+    {
+        return VirtualModelManager::getInstance()
+            ->getProvider(static::providerType())
+            ->many(static::class, $config)
+        ;
+    }
+
+    /**
+     * @return VirtualModel
      * @throws \Exception
      */
     public static function create()

@@ -1,6 +1,6 @@
 {
-  "name": "kosuha606/environment-models",
-  "description": "EnvironmentModel",
+  "name": "kosuha606/virtual-model",
+  "description": "VirtualModel",
   "type": "library",
   "authors": [
     {
@@ -14,7 +14,7 @@
   },
   "autoload": {
     "psr-4": {
-      "kosuha606\\EnvironmentModel\\": "src"
+      "kosuha606\\VirtualModel\\": "src"
     }
   },
   "require-dev": {

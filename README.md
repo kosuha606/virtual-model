@@ -1,5 +1,5 @@
 
-# Environment Model
+# Virtual Model
 
 Цель этого репозитория заключается в том, чтобы создать слой
 моделей, который не будет зависить от окружения в которм испольняется.
@@ -9,7 +9,7 @@
 ## Установка
 Установить пакет можно через композер:
 ```bash
-$ composer require kosuha606/environment-models
+$ composer require kosuha606/virtual-model
 ```
 
 ## Быстрый старт
@@ -27,14 +27,14 @@ $ composer require kosuha606/environment-models
 
 ```php
 $provider = new MemoryModelProvider();
-EnvironmentModelManager::getInstance()->setProvider($provider);
+VirtualModelManager::getInstance()->setProvider($provider);
 ```
 
 Эта настройка может быть сделана средствами DI фреймворка или непосредственно как в моем случае.
 
 Далее необходимо описать простейщую модель:
 ```php
-class Product extends EnvironmentModel
+class Product extends VirtualModel
 {
     public function attributes(): array
     {
@@ -51,7 +51,7 @@ class Product extends EnvironmentModel
 
 После этого можно уже запрашивать данные о модели из EnvironmentModelManager таким образом:
 ```php
-$products = EnvironmentModelManager::getInstance()->getProvider()->many(Product::class, [
+$products = VirtualModelManager::getInstance()->getProvider()->many(Product::class, [
     'where' => [
         ['all']
     ]

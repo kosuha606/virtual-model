@@ -3,7 +3,7 @@
 namespace kosuha606\EnvironmentModel\Example\Shop\Services;
 
 
-use kosuha606\EnvironmentModel\EnvironmentModelManager;
+use kosuha606\EnvironmentModel\VirtualModelManager;
 use kosuha606\EnvironmentModel\Example\Shop\Model\Action;
 use kosuha606\EnvironmentModel\Example\Shop\Model\Product;
 
@@ -25,7 +25,7 @@ class ProductService
      */
     public function findAllActions()
     {
-        $actions = EnvironmentModelManager::getInstance()->getProvider()->many(Action::class, [
+        $actions = VirtualModelManager::getInstance()->getProvider()->many(Action::class, [
             'where' => [
                 ['all']
             ]
@@ -40,7 +40,7 @@ class ProductService
     public function findProductById($productId)
     {
         /** @var Product $product */
-        $product = EnvironmentModelManager::getInstance()->getProvider()->one(Product::class, [
+        $product = VirtualModelManager::getInstance()->getProvider()->one(Product::class, [
             'where' => [
                 ['=', 'id', $productId]
             ]

@@ -3,8 +3,8 @@
 namespace kosuha606\EnvironmentModel\Example\Shop\Services;
 
 
-use kosuha606\EnvironmentModel\EnvironmentModel;
-use kosuha606\EnvironmentModel\EnvironmentModelManager;
+use kosuha606\EnvironmentModel\VirtualModel;
+use kosuha606\EnvironmentModel\VirtualModelManager;
 use kosuha606\EnvironmentModel\Example\Shop\Model\OrderReserve;
 use kosuha606\EnvironmentModel\Example\Shop\Model\Product;
 
@@ -47,7 +47,7 @@ class OrderService
      */
     public function getOrderReserve()
     {
-        $items = EnvironmentModelManager::getInstance()->getProvider()->many(OrderReserve::class, [
+        $items = VirtualModelManager::getInstance()->getProvider()->many(OrderReserve::class, [
             'where' => [
                 ['all']
             ]

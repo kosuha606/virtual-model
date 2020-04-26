@@ -2,13 +2,13 @@
 
 namespace kosuha606\EnvironmentModel\Example;
 
-use kosuha606\EnvironmentModel\EnvironmentModelProvider;
+use kosuha606\EnvironmentModel\VirtualModelProvider;
 
 /**
  * Провайдер для хранения данных в памяти программы
  * @package kosuha606\EnvironmentModel\example
  */
-class MemoryModelProvider extends EnvironmentModelProvider
+class MemoryModelProvider extends VirtualModelProvider
 {
     /**
      * @var array
