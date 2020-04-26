@@ -8,6 +8,8 @@ namespace kosuha606\EnvironmentModel;
  */
 abstract class VirtualModel
 {
+    public $isNewRecord = true;
+
     /**
      * @var string
      */
@@ -43,7 +45,7 @@ abstract class VirtualModel
 
     /**
      * @param array $config
-     * @return mixed
+     * @return static
      * @throws \Exception
      */
     public static function one($config = [])
@@ -121,6 +123,15 @@ abstract class VirtualModel
     }
 
     /**
+     * @param $name
+     * @return bool
+     */
+    public function hasAttribute($name)
+    {
+        return isset($this->attributes[$name]);
+    }
+
+    /**
      * @description Загрузить данные в атрибуты
      * @throws \Exception
      */
@@ -139,8 +150,9 @@ abstract class VirtualModel
 
     /**
      * @description Сохранить модель
+     * @throws \Exception
      */
-    public function save($config)
+    public function save($config = [])
     {
         $saveMethod = $this->normalizeEnvMethod('save');
 
@@ -148,7 +160,18 @@ abstract class VirtualModel
             return $this->$saveMethod($config);
         }
 
+        VirtualModelManager::getInstance()->getProvider(static::providerType())->persist($this);
+        VirtualModelManager::getInstance()->getProvider(static::providerType())->flush();
+
         return null;
+    }
+
+    /**
+     * @throws \Exception
+     */
+    public function delete()
+    {
+        VirtualModelManager::getInstance()->getProvider(static::providerType())->delete($this);
     }
 
     /**
@@ -195,6 +218,14 @@ abstract class VirtualModel
         $commonSetterName = $this->normalizeCommonMethod('set_'.$snakeName);
         if (method_exists($this, $commonSetterName)) {
             return $this->$commonSetterName($value);
+        }
+
+        if ($this->hasAttribute($snakeName)) {
+            $this->setAttribute($snakeName, $value);
+        }
+
+        if (property_exists($this, $snakeName)) {
+            $this->$snakeName = $value;
         }
 
         return null;

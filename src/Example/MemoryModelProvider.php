@@ -2,6 +2,7 @@
 
 namespace kosuha606\EnvironmentModel\Example;
 
+use kosuha606\EnvironmentModel\VirtualModel;
 use kosuha606\EnvironmentModel\VirtualModelProvider;
 
 /**
@@ -103,4 +104,62 @@ class MemoryModelProvider extends VirtualModelProvider
         return $result;
     }
 
+    /**
+     * @throws \Exception
+     */
+    public function flush()
+    {
+        $result = false;
+
+        /** @var VirtualModel $model */
+        foreach ($this->persistedModels as $model) {
+            $modelClass = get_class($model);
+
+            if ($model->isNewRecord) {
+                $this->memoryStorage[$modelClass][] = $model->getAttributes();
+                $result = true;
+            } else {
+                if (!$model->hasAttribute('id')) {
+                    throw new \Exception("Model $modelClass has no id attribute and cant be saved");
+                }
+
+                foreach ($this->memoryStorage[$modelClass] as $key => $possibleModel) {
+                    if ($possibleModel['id'] === $model->id) {
+                        $this->memoryStorage[$modelClass][$key] = $model->getAttributes();
+                        $result = true;
+                    }
+                }
+            }
+        }
+
+        parent::flush();
+
+        return $result;
+    }
+
+    /**
+     * @param VirtualModel $model
+     * @return bool
+     * @throws \Exception
+     */
+    public function delete(VirtualModel $model)
+    {
+        $modelClass = get_class($model);
+
+        if (!$model->hasAttribute('id')) {
+            throw new \Exception("Model $modelClass has no id attribute and cant be removed");
+        }
+
+        $result = false;
+
+        foreach ($this->memoryStorage[$modelClass] as $key => $possibleModel) {
+            if ($possibleModel['id'] === $model->id) {
+                unset($this->memoryStorage[$modelClass][$key]);
+                $result = true;
+                break;
+            }
+        }
+
+        return $result;
+    }
 }

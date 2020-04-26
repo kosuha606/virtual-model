@@ -45,8 +45,10 @@ abstract class VirtualModelProvider
     public function one($modelClass, $config)
     {
         $attributes = $this->findOne($modelClass, $config);
+        $model = $this->buildModel($modelClass, $attributes);
+        $model->isNewRecord = false;
 
-        return $this->buildModel($modelClass, $attributes);
+        return $model;
     }
 
     /**
@@ -68,13 +70,16 @@ abstract class VirtualModelProvider
         $result = [];
 
         foreach ($attributesArray as $attributes) {
+            $model = $this->buildModel($modelClass, $attributes);
+            $model->isNewRecord = false;
+
             if ($indexBy) {
                 if (!isset($attributes[$indexBy])) {
                     throw new \Exception("No such attribute $indexBy for index in provider");
                 }
-                $result[$attributes[$indexBy]] = $this->buildModel($modelClass, $attributes);
+                $result[$attributes[$indexBy]] = $model;
             } else {
-                $result[] = $this->buildModel($modelClass, $attributes);
+                $result[] = $model;
             }
         }
 
@@ -95,7 +100,7 @@ abstract class VirtualModelProvider
 
     public function flush()
     {
-        // Flush persisted models
+        $this->persistedModels = [];
     }
 
     public function delete(VirtualModel $model)
