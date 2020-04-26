@@ -10,14 +10,6 @@ use kosuha606\EnvironmentModel\VirtualModel;
  */
 class User extends VirtualModel
 {
-    public $id;
-
-    public $name;
-
-    public $role;
-
-    public $personalDiscount = 0;
-
     public function attributes(): array
     {
         return [

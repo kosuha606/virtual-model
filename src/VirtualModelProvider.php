@@ -19,6 +19,11 @@ abstract class VirtualModelProvider
     abstract public function environemnt(): string;
 
     /**
+     * @var array
+     */
+    protected $persistedModels = [];
+
+    /**
      * @param $modelClass
      * @param array $attributes
      * @return VirtualModel
@@ -82,6 +87,21 @@ abstract class VirtualModelProvider
      * @return mixed
      */
     abstract protected function findMany($modelClass, $config);
+
+    public function persist(VirtualModel $model)
+    {
+        $this->persistedModels[] = $model;
+    }
+
+    public function flush()
+    {
+        // Flush persisted models
+    }
+
+    public function delete(VirtualModel $model)
+    {
+        // Delete model
+    }
 
     /**
      * @return string

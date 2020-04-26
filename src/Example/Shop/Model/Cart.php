@@ -66,11 +66,16 @@ class Cart
         return $this->cartService->calculateTotals($this);
     }
 
+    /**
+     * @param Product $product
+     * @param int $qty
+     * @throws \Exception
+     */
     public function addProduct(Product $product, $qty = 1)
     {
         if ($product->hasFreeRests($qty)) {
             $this->items[] = new CartItem([
-                'price' => $product->salePrice,
+                'price' => $product->sale_price,
                 'productId' => $product->id,
                 'qty' => $qty
             ]);

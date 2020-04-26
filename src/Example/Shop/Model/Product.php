@@ -10,12 +10,17 @@ use kosuha606\EnvironmentModel\Example\Shop\Services\ProductService;
 
 /**
  * Продукт
- * @property $salePrice
  */
 class Product extends VirtualModel
 {
     /** @var ProductService */
     private $productService;
+
+    /**
+     * Виртуальный атритут за который действительно продается товар
+     * @var int
+     */
+    private $sale_price;
 
     public function attributes(): array
     {
@@ -41,6 +46,7 @@ class Product extends VirtualModel
      * @param $qty
      * @return bool
      * @NOTICE Переделал, теперь происходит делегирование логики к дружественному классу-сервису
+     * @throws \Exception
      */
     public function hasFreeRests($qty)
     {
@@ -54,37 +60,5 @@ class Product extends VirtualModel
     public function getSalePrice()
     {
         return $this->productService->calculateProductSalePrice($this);
-    }
-
-    /**
-     * @return Action[]
-     */
-    public function getActions(): array
-    {
-        return $this->actions;
-    }
-
-    /**
-     * @param Action[] $actions
-     */
-    public function setActions(array $actions): void
-    {
-        $this->actions = $actions;
-    }
-
-    /**
-     * @return ProductRests[]
-     */
-    public function getRests(): array
-    {
-        return $this->rests;
-    }
-
-    /**
-     * @param ProductRests[] $rests
-     */
-    public function setRests(array $rests): void
-    {
-        $this->rests = $rests;
     }
 }

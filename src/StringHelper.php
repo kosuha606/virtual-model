@@ -26,12 +26,12 @@ class StringHelper
      */
     public static function snakeToCamel($string, $capitalizeFirstCharacter = false)
     {
-        $str = str_replace('-', '', ucwords($string, '-'));
+        $result = str_replace('_', '', ucwords($string, '_'));
 
         if (!$capitalizeFirstCharacter) {
-            $str = lcfirst($str);
+            $result = lcfirst($result);
         }
 
-        return $str;
+        return $result;
     }
 }

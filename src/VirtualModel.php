@@ -68,12 +68,15 @@ abstract class VirtualModel
     }
 
     /**
-     * @return VirtualModel
+     * @return static
      * @throws \Exception
      */
-    public static function create()
+    public static function create($attributes = [])
     {
-        $instance = new static();
+        $instance = VirtualModelManager::getInstance()->getProvider(static::providerType())->buildModel(
+            static::class,
+            $attributes
+        );
 
         return $instance;
     }
@@ -167,6 +170,10 @@ abstract class VirtualModel
             return $this->$commonGetterName();
         }
 
+        if (property_exists($this, $snakeName)) {
+            return $this->$snakeName;
+        }
+
         return $this->attributes[$snakeName];
     }
 
@@ -199,7 +206,10 @@ abstract class VirtualModel
      */
     protected function ensureAttributeExists($name)
     {
-        if (!isset($this->attributes[$name])) {
+        if (
+            !isset($this->attributes[$name]) &&
+            !property_exists($this, $name)
+        ) {
             $envModelName = get_class($this);
             throw new \Exception("No such attribute $name in env model named $envModelName");
         }

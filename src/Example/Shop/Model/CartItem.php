@@ -14,6 +14,13 @@ class CartItem
 
     public $qty;
 
+    public function __construct($data = [])
+    {
+        foreach ($data as $attr => $value) {
+            $this->$attr = $value;
+        }
+    }
+
     public function getTotal()
     {
         return $this->price*$this->qty;

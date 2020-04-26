@@ -4,6 +4,8 @@ namespace kosuha606\EnvironmentModel\Example\Shop\Cart;
 
 
 use kosuha606\EnvironmentModel\Example\Shop\Model\Cart;
+use kosuha606\EnvironmentModel\Example\Shop\Model\Delivery;
+use kosuha606\EnvironmentModel\Example\Shop\Model\Payment;
 use kosuha606\EnvironmentModel\Example\Shop\Services\CartService;
 use kosuha606\EnvironmentModel\Example\Shop\Services\ProductService;
 
@@ -38,6 +40,11 @@ class CartBuilder
         $this->productService = $productService;
     }
 
+    /**
+     * @param $productId
+     * @param $qty
+     * @throws \Exception
+     */
     public function addProductById($productId, $qty)
     {
         $product = $this->productService->findProductById($productId);
@@ -53,12 +60,14 @@ class CartBuilder
 
     public function setPaymentById($paymentId)
     {
+        /** @var Payment $payment */
         $payment = $this->cartService->getPaymentById($paymentId);
         $this->cart->setPayment($payment);
     }
 
     public function setDeliveryById($deliveryId)
     {
+        /** @var Delivery $delivery */
         $delivery = $this->cartService->getDeliveryById($deliveryId);
         $this->cart->setDelivery($delivery);
     }
