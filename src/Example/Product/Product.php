@@ -1,9 +1,9 @@
 <?php
 
-namespace kosuha606\EnvironmentModel\Example\Product;
+namespace kosuha606\VirtualModel\Example\Product;
 
-use kosuha606\EnvironmentModel\VirtualModel;
-use kosuha606\EnvironmentModel\VirtualModelManager;
+use kosuha606\VirtualModel\VirtualModel;
+use kosuha606\VirtualModel\VirtualModelManager;
 
 /**
  * @property $amount

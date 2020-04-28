@@ -1,10 +1,10 @@
 <?php
 
-namespace kosuha606\EnvironmentModel;
+namespace kosuha606\VirtualModel;
 
 /**
  * @description Провайдер для работы с сущностями модели
- * @package kosuha606\EnvironmentModel
+ * @package kosuha606\VirtualModel
  */
 abstract class VirtualModelProvider
 {

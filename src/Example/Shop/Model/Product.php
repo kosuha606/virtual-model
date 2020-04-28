@@ -1,12 +1,12 @@
 <?php
 
-namespace kosuha606\EnvironmentModel\Example\Shop\Model;
+namespace kosuha606\VirtualModel\Example\Shop\Model;
 
 
 
-use kosuha606\EnvironmentModel\VirtualModel;
-use kosuha606\EnvironmentModel\Example\Shop\ServiceManager;
-use kosuha606\EnvironmentModel\Example\Shop\Services\ProductService;
+use kosuha606\VirtualModel\VirtualModel;
+use kosuha606\VirtualModel\Example\Shop\ServiceManager;
+use kosuha606\VirtualModel\Example\Shop\Services\ProductService;
 
 /**
  * Продукт

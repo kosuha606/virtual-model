@@ -1,10 +1,10 @@
 <?php
 
-namespace kosuha606\EnvironmentModel;
+namespace kosuha606\VirtualModel;
 
 /**
  * Class EnvironmentModelManager
- * @package kosuha606\EnvironmentModel
+ * @package kosuha606\VirtualModel
  */
 class VirtualModelManager
 {

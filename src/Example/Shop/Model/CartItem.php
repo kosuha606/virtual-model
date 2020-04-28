@@ -1,6 +1,6 @@
 <?php
 
-namespace kosuha606\EnvironmentModel\Example\Shop\Model;
+namespace kosuha606\VirtualModel\Example\Shop\Model;
 
 /**
  * Элемент корзины

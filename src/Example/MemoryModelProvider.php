@@ -1,13 +1,13 @@
 <?php
 
-namespace kosuha606\EnvironmentModel\Example;
+namespace kosuha606\VirtualModel\Example;
 
-use kosuha606\EnvironmentModel\VirtualModel;
-use kosuha606\EnvironmentModel\VirtualModelProvider;
+use kosuha606\VirtualModel\VirtualModel;
+use kosuha606\VirtualModel\VirtualModelProvider;
 
 /**
  * Провайдер для хранения данных в памяти программы
- * @package kosuha606\EnvironmentModel\example
+ * @package kosuha606\VirtualModel\example
  */
 class MemoryModelProvider extends VirtualModelProvider
 {

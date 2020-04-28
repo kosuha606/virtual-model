@@ -1,10 +1,10 @@
 <?php
 
-use kosuha606\EnvironmentModel\VirtualModelManager;
-use kosuha606\EnvironmentModel\Example\MemoryModelProvider;
-use kosuha606\EnvironmentModel\Example\Product\Category;
-use kosuha606\EnvironmentModel\Example\Product\Product;
-use kosuha606\EnvironmentModel\Example\Product\ProductsStatistic;
+use kosuha606\VirtualModel\VirtualModelManager;
+use kosuha606\VirtualModel\Example\MemoryModelProvider;
+use kosuha606\VirtualModel\Example\Product\Category;
+use kosuha606\VirtualModel\Example\Product\Product;
+use kosuha606\VirtualModel\Example\Product\ProductsStatistic;
 use PHPUnit\Framework\TestCase;
 
 /**

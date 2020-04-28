@@ -1,12 +1,12 @@
 <?php
 
-namespace kosuha606\EnvironmentModel\Example\Shop\Services;
+namespace kosuha606\VirtualModel\Example\Shop\Services;
 
 
-use kosuha606\EnvironmentModel\VirtualModel;
-use kosuha606\EnvironmentModel\VirtualModelManager;
-use kosuha606\EnvironmentModel\Example\Shop\Model\OrderReserve;
-use kosuha606\EnvironmentModel\Example\Shop\Model\Product;
+use kosuha606\VirtualModel\VirtualModel;
+use kosuha606\VirtualModel\VirtualModelManager;
+use kosuha606\VirtualModel\Example\Shop\Model\OrderReserve;
+use kosuha606\VirtualModel\Example\Shop\Model\Product;
 
 class OrderService
 {

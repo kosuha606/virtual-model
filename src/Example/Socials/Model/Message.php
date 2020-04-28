@@ -1,8 +1,8 @@
 <?php
 
-namespace kosuha606\EnvironmentModel\Example\Socials\Model;
+namespace kosuha606\VirtualModel\Example\Socials\Model;
 
-use kosuha606\EnvironmentModel\VirtualModel;
+use kosuha606\VirtualModel\VirtualModel;
 
 class Message extends VirtualModel
 {

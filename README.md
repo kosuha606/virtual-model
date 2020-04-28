@@ -18,7 +18,7 @@ $ composer require kosuha606/virtual-model
 В тестах используется провайдер данных, который берет данные
 из массива в своем свойстве. 
 
-Класс kosuha606\EnvironmentModel\Example\MemoryModelProvider;
+Класс kosuha606\VirtualModel\Example\MemoryModelProvider;
 
 По подобию этого класса вы можете реализовать провайдер для необходимого
 вам типа хранения данных, например, для Doctrine, ActiveRecord, Eloquent.

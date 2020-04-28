@@ -1,13 +1,13 @@
 <?php
 
-namespace kosuha606\EnvironmentModel\Example\Shop\Cart;
+namespace kosuha606\VirtualModel\Example\Shop\Cart;
 
 
-use kosuha606\EnvironmentModel\Example\Shop\Model\Cart;
-use kosuha606\EnvironmentModel\Example\Shop\Model\Delivery;
-use kosuha606\EnvironmentModel\Example\Shop\Model\Payment;
-use kosuha606\EnvironmentModel\Example\Shop\Services\CartService;
-use kosuha606\EnvironmentModel\Example\Shop\Services\ProductService;
+use kosuha606\VirtualModel\Example\Shop\Model\Cart;
+use kosuha606\VirtualModel\Example\Shop\Model\Delivery;
+use kosuha606\VirtualModel\Example\Shop\Model\Payment;
+use kosuha606\VirtualModel\Example\Shop\Services\CartService;
+use kosuha606\VirtualModel\Example\Shop\Services\ProductService;
 
 /**
  * Построитель корзины, основная идея в том, чтобы

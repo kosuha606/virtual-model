@@ -1,8 +1,8 @@
 <?php
 
-use kosuha606\EnvironmentModel\Example\MemoryModelProvider;
-use kosuha606\EnvironmentModel\Example\Product\Product;
-use kosuha606\EnvironmentModel\VirtualModelManager;
+use kosuha606\VirtualModel\Example\MemoryModelProvider;
+use kosuha606\VirtualModel\Example\Product\Product;
+use kosuha606\VirtualModel\VirtualModelManager;
 use PHPUnit\Framework\TestCase;
 
 class CrudTest extends TestCase

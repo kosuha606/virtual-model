@@ -1,8 +1,8 @@
 <?php
 
-namespace kosuha606\EnvironmentModel\Example\Shop\Services;
+namespace kosuha606\VirtualModel\Example\Shop\Services;
 
-use kosuha606\EnvironmentModel\Example\Shop\Model\Cart;
+use kosuha606\VirtualModel\Example\Shop\Model\Cart;
 
 class CartService
 {

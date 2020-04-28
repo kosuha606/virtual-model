@@ -1,17 +1,17 @@
 <?php
 
-use kosuha606\EnvironmentModel\Example\MemoryModelProvider;
-use kosuha606\EnvironmentModel\Example\Shop\Model\Action;
-use kosuha606\EnvironmentModel\Example\Shop\Model\Cart;
-use kosuha606\EnvironmentModel\Example\Shop\Model\Delivery;
-use kosuha606\EnvironmentModel\Example\Shop\Model\OrderReserve;
-use kosuha606\EnvironmentModel\Example\Shop\Model\Payment;
-use kosuha606\EnvironmentModel\Example\Shop\Model\Product;
-use kosuha606\EnvironmentModel\Example\Shop\Model\ProductRests;
-use kosuha606\EnvironmentModel\Example\Shop\Model\Promocode;
-use kosuha606\EnvironmentModel\Example\Shop\Model\User;
-use kosuha606\EnvironmentModel\Example\Shop\ServiceManager;
-use kosuha606\EnvironmentModel\VirtualModelManager;
+use kosuha606\VirtualModel\Example\MemoryModelProvider;
+use kosuha606\VirtualModel\Example\Shop\Model\Action;
+use kosuha606\VirtualModel\Example\Shop\Model\Cart;
+use kosuha606\VirtualModel\Example\Shop\Model\Delivery;
+use kosuha606\VirtualModel\Example\Shop\Model\OrderReserve;
+use kosuha606\VirtualModel\Example\Shop\Model\Payment;
+use kosuha606\VirtualModel\Example\Shop\Model\Product;
+use kosuha606\VirtualModel\Example\Shop\Model\ProductRests;
+use kosuha606\VirtualModel\Example\Shop\Model\Promocode;
+use kosuha606\VirtualModel\Example\Shop\Model\User;
+use kosuha606\VirtualModel\Example\Shop\ServiceManager;
+use kosuha606\VirtualModel\VirtualModelManager;
 use PHPUnit\Framework\TestCase;
 
 class ShopTest extends TestCase

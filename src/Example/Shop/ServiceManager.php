@@ -1,14 +1,14 @@
 <?php
 
-namespace kosuha606\EnvironmentModel\Example\Shop;
+namespace kosuha606\VirtualModel\Example\Shop;
 
-use kosuha606\EnvironmentModel\Example\Shop\Services\CartService;
-use kosuha606\EnvironmentModel\Example\Shop\Services\DeliveryService;
-use kosuha606\EnvironmentModel\Example\Shop\Services\OrderService;
-use kosuha606\EnvironmentModel\Example\Shop\Services\PaymentService;
-use kosuha606\EnvironmentModel\Example\Shop\Services\ProductService;
-use kosuha606\EnvironmentModel\Example\Shop\Services\PromocodeService;
-use kosuha606\EnvironmentModel\Example\Shop\Services\UserService;
+use kosuha606\VirtualModel\Example\Shop\Services\CartService;
+use kosuha606\VirtualModel\Example\Shop\Services\DeliveryService;
+use kosuha606\VirtualModel\Example\Shop\Services\OrderService;
+use kosuha606\VirtualModel\Example\Shop\Services\PaymentService;
+use kosuha606\VirtualModel\Example\Shop\Services\ProductService;
+use kosuha606\VirtualModel\Example\Shop\Services\PromocodeService;
+use kosuha606\VirtualModel\Example\Shop\Services\UserService;
 
 /**
  * @property UserService $userService

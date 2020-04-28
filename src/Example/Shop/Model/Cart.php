@@ -1,9 +1,9 @@
 <?php
 
-namespace kosuha606\EnvironmentModel\Example\Shop\Model;
+namespace kosuha606\VirtualModel\Example\Shop\Model;
 
-use kosuha606\EnvironmentModel\Example\Shop\ServiceManager;
-use kosuha606\EnvironmentModel\Example\Shop\Services\CartService;
+use kosuha606\VirtualModel\Example\Shop\ServiceManager;
+use kosuha606\VirtualModel\Example\Shop\Services\CartService;
 
 /**
  * Корзина
