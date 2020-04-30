@@ -273,4 +273,13 @@ abstract class VirtualModel
             $this->attributes[$attribute] = null;
         }
     }
+
+    public function toArray()
+    {
+        $props = get_object_vars($this);
+        $result = array_merge($props, $this->getAttributes());
+        unset($result['attributes']);
+
+        return $result;
+    }
 }
