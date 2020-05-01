@@ -84,6 +84,22 @@ abstract class VirtualModel
     }
 
     /**
+     * @param array $setAttributes
+     * @return array
+     * @throws \Exception
+     */
+    public static function createMany($setAttributes = [])
+    {
+        $result = [];
+
+        foreach ($setAttributes as $attributes) {
+            $result[] = self::create($attributes);
+        }
+
+        return $result;
+    }
+
+    /**
      * @description Конструктор сначала инициализирует атрибуты пустыми
      * @description значениями, а потом заполняет атрибуты данными для окружения
      * @throws \Exception
