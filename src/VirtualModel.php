@@ -108,7 +108,13 @@ abstract class VirtualModel
      */
     public function setAttributes($attributes)
     {
-        $this->attributes = $attributes;
+        if (!$attributes) {
+            return;
+        }
+
+        foreach ($attributes as $attribute => $value) {
+            $this->attributes[$attribute] = $value;
+        }
     }
 
     /**
