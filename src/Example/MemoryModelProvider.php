@@ -162,4 +162,13 @@ class MemoryModelProvider extends VirtualModelProvider
 
         return $result;
     }
+
+    public function count($modelClass, $config)
+    {
+        if (!$this->isCorrectConditions($modelClass, $config)) {
+            return 0;
+        }
+
+        return count($this->findInStorage($modelClass, $config, false));
+    }
 }

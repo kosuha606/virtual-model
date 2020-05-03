@@ -303,4 +303,28 @@ abstract class VirtualModel
 
         return $result;
     }
+
+    /**
+     * Позволяет вызывать метод провайдера через модель
+     * @param $name
+     * @param $arguments
+     * @return mixed|null
+     * @throws \Exception
+     */
+    public static function __callStatic($name, $arguments = [])
+    {
+        $result = null;
+        $arguments['modelClass'] = self::class;
+
+        if (method_exists(VirtualModelManager::getInstance()->getProvider(static::providerType()), $name)) {
+            $result = call_user_func_array([
+                VirtualModelManager::getInstance()->getProvider(static::providerType()),
+                $name
+            ], $arguments);
+        } else {
+            throw new \Exception("No such method $name in related provider");
+        }
+
+        return $result;
+    }
 }
