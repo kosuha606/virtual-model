@@ -311,10 +311,11 @@ abstract class VirtualModel
      * @return mixed|null
      * @throws \Exception
      */
-    public static function __callStatic($name, $arguments = [])
+    public static function __callStatic($name, $inputArgs = [])
     {
         $result = null;
-        $arguments['modelClass'] = self::class;
+        $arguments = [static::class];
+        $arguments = array_merge($arguments, $inputArgs);
 
         if (method_exists(VirtualModelManager::getInstance()->getProvider(static::providerType()), $name)) {
             $result = call_user_func_array([
