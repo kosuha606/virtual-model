@@ -150,7 +150,7 @@ abstract class VirtualModel
      */
     public function hasAttribute($name)
     {
-        return isset($this->attributes[$name]);
+        return key_exists($name, $this->attributes);
     }
 
     /**
@@ -259,7 +259,7 @@ abstract class VirtualModel
     protected function ensureAttributeExists($name)
     {
         if (
-            !isset($this->attributes[$name]) &&
+            !key_exists($name, $this->attributes) &&
             !property_exists($this, $name)
         ) {
             $envModelName = get_class($this);
