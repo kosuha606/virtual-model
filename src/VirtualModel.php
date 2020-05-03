@@ -183,9 +183,8 @@ abstract class VirtualModel
         }
 
         VirtualModelManager::getInstance()->getProvider(static::providerType())->persist($this);
-        VirtualModelManager::getInstance()->getProvider(static::providerType())->flush();
 
-        return null;
+        return VirtualModelManager::getInstance()->getProvider(static::providerType())->flush();
     }
 
     /**
