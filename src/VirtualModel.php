@@ -84,6 +84,22 @@ abstract class VirtualModel
     }
 
     /**
+     * @param array $setAttributes
+     * @return array
+     * @throws \Exception
+     */
+    public static function createMany($setAttributes = [])
+    {
+        $result = [];
+
+        foreach ($setAttributes as $attributes) {
+            $result[] = self::create($attributes);
+        }
+
+        return $result;
+    }
+
+    /**
      * @description Конструктор сначала инициализирует атрибуты пустыми
      * @description значениями, а потом заполняет атрибуты данными для окружения
      * @throws \Exception
@@ -134,7 +150,7 @@ abstract class VirtualModel
      */
     public function hasAttribute($name)
     {
-        return isset($this->attributes[$name]);
+        return key_exists($name, $this->attributes);
     }
 
     /**
@@ -167,9 +183,8 @@ abstract class VirtualModel
         }
 
         VirtualModelManager::getInstance()->getProvider(static::providerType())->persist($this);
-        VirtualModelManager::getInstance()->getProvider(static::providerType())->flush();
 
-        return null;
+        return VirtualModelManager::getInstance()->getProvider(static::providerType())->flush();
     }
 
     /**
@@ -244,7 +259,7 @@ abstract class VirtualModel
     protected function ensureAttributeExists($name)
     {
         if (
-            !isset($this->attributes[$name]) &&
+            !key_exists($name, $this->attributes) &&
             !property_exists($this, $name)
         ) {
             $envModelName = get_class($this);
@@ -285,6 +300,31 @@ abstract class VirtualModel
         $props = get_object_vars($this);
         $result = array_merge($props, $this->getAttributes());
         unset($result['attributes']);
+
+        return $result;
+    }
+
+    /**
+     * Позволяет вызывать метод провайдера через модель
+     * @param $name
+     * @param $arguments
+     * @return mixed|null
+     * @throws \Exception
+     */
+    public static function __callStatic($name, $inputArgs = [])
+    {
+        $result = null;
+        $arguments = [static::class];
+        $arguments = array_merge($arguments, $inputArgs);
+
+        if (method_exists(VirtualModelManager::getInstance()->getProvider(static::providerType()), $name)) {
+            $result = call_user_func_array([
+                VirtualModelManager::getInstance()->getProvider(static::providerType()),
+                $name
+            ], $arguments);
+        } else {
+            throw new \Exception("No such method $name in related provider");
+        }
 
         return $result;
     }

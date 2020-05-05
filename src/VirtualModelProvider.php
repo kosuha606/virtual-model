@@ -101,6 +101,8 @@ abstract class VirtualModelProvider
     public function flush()
     {
         $this->persistedModels = [];
+
+        return null;
     }
 
     public function delete(VirtualModel $model)
