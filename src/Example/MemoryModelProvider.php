@@ -116,10 +116,15 @@ class MemoryModelProvider extends VirtualModelProvider
             $modelClass = get_class($model);
 
             if ($model->isNewRecord) {
-                $this->memoryStorage[$modelClass][] = $model->getAttributes();
                 if ($model->hasAttribute('id')) {
+                    if (!$model->id) {
+                        $model->id = $this->getNextId($modelClass);
+                    }
+
                     $result = [$model->id];
                 }
+
+                $this->memoryStorage[$modelClass][] = $model->getAttributes();
             } else {
                 if (!$model->hasAttribute('id')) {
                     throw new \Exception("Model $modelClass has no id attribute and cant be saved");
@@ -165,6 +170,11 @@ class MemoryModelProvider extends VirtualModelProvider
         return $result;
     }
 
+    /**
+     * @param $modelClass
+     * @param $config
+     * @return int
+     */
     public function count($modelClass, $config)
     {
         if (!$this->isCorrectConditions($modelClass, $config)) {
@@ -172,5 +182,31 @@ class MemoryModelProvider extends VirtualModelProvider
         }
 
         return count($this->findInStorage($modelClass, $config, false));
+    }
+
+    /**
+     * @param $modelClass
+     * @return int
+     * @throws \Exception
+     */
+    public function getNextId($modelClass)
+    {
+        if (!isset($this->memoryStorage[$modelClass])) {
+            return 0;
+        }
+
+        $items = $this->memoryStorage[$modelClass];
+
+        $maxId = 0;
+        foreach ($items as $item) {
+            if (
+                isset($item['id']) &&
+                $item['id'] >= $maxId
+            ) {
+                $maxId = $item['id']+1;
+            }
+        }
+
+        return $maxId;
     }
 }
