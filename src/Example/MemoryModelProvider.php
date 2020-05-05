@@ -117,7 +117,9 @@ class MemoryModelProvider extends VirtualModelProvider
 
             if ($model->isNewRecord) {
                 $this->memoryStorage[$modelClass][] = $model->getAttributes();
-                $result = [$model->id];
+                if ($model->hasAttribute('id')) {
+                    $result = [$model->id];
+                }
             } else {
                 if (!$model->hasAttribute('id')) {
                     throw new \Exception("Model $modelClass has no id attribute and cant be saved");
