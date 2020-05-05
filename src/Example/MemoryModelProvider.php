@@ -109,7 +109,7 @@ class MemoryModelProvider extends VirtualModelProvider
      */
     public function flush()
     {
-        $result = false;
+        $result = [];
 
         /** @var VirtualModel $model */
         foreach ($this->persistedModels as $model) {
@@ -117,7 +117,7 @@ class MemoryModelProvider extends VirtualModelProvider
 
             if ($model->isNewRecord) {
                 $this->memoryStorage[$modelClass][] = $model->getAttributes();
-                $result = true;
+                $result = [$model->id];
             } else {
                 if (!$model->hasAttribute('id')) {
                     throw new \Exception("Model $modelClass has no id attribute and cant be saved");
@@ -126,7 +126,7 @@ class MemoryModelProvider extends VirtualModelProvider
                 foreach ($this->memoryStorage[$modelClass] as $key => $possibleModel) {
                     if ($possibleModel['id'] === $model->id) {
                         $this->memoryStorage[$modelClass][$key] = $model->getAttributes();
-                        $result = true;
+                        $result[] = $possibleModel['id'];
                     }
                 }
             }
