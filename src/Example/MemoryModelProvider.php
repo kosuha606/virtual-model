@@ -82,21 +82,27 @@ class MemoryModelProvider extends VirtualModelProvider
         $result = [];
 
         foreach ($this->memoryStorage[$modelClass] as $item) {
+            $isMatch = true;
+
             foreach ($config['where'] as $whereConfig) {
                 switch ($whereConfig[0]) {
                     case 'all':
-                        $result[] = $item;
+                        $isMatch = $isMatch && true;
                         break;
                     case '=':
-                        if ($item[$whereConfig[1]] === $whereConfig[2]) {
-                            if ($isGreedy) {
-                                $result = $item;
-                                break;
-                            } else {
-                                $result[] = $item;
-                            }
+                        if ($item[$whereConfig[1]] != $whereConfig[2]) {
+                            $isMatch = $isMatch && false;
                         }
                         break;
+                }
+            }
+
+            if ($isMatch) {
+                if ($isGreedy) {
+                    $result = $item;
+                    break;
+                } else {
+                    $result[] = $item;
                 }
             }
         }
