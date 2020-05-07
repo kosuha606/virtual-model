@@ -305,6 +305,44 @@ abstract class VirtualModel
     }
 
     /**
+     * Перевести массив объектов в обычный массив
+     * @param $item
+     * @return array
+     */
+    public static function allToArray($items)
+    {
+        return array_map(function($item) {
+            return $item->toArray();
+        }, $items);
+    }
+
+    /**
+     * Возможность обратиться к методу провайдера из контекста объекта
+     * @TODO дублирование с _callStatic
+     * @param $name
+     * @param array $inputArgs
+     * @return mixed|null
+     * @throws \Exception
+     */
+    public function __call($name, $inputArgs = [])
+    {
+        $result = null;
+        $arguments = [static::class];
+        $arguments = array_merge($arguments, $inputArgs);
+
+        if (method_exists(VirtualModelManager::getInstance()->getProvider(static::providerType()), $name)) {
+            $result = call_user_func_array([
+                VirtualModelManager::getInstance()->getProvider(static::providerType()),
+                $name
+            ], $arguments);
+        } else {
+            throw new \Exception("No such method $name in related provider");
+        }
+
+        return $result;
+    }
+
+    /**
      * Позволяет вызывать метод провайдера через модель
      * @param $name
      * @param $arguments
