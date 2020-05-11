@@ -61,12 +61,12 @@ abstract class VirtualModel
      * @return array
      * @throws \Exception
      */
-    public static function many($config = [])
+    public static function many($config = [], $indexBy = null)
     {
         return VirtualModelManager::getInstance()
             ->getProvider(static::providerType())
-            ->many(static::class, $config)
-        ;
+            ->many(static::class, $config, $indexBy)
+            ;
     }
 
     /**
