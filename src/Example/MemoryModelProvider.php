@@ -81,6 +81,12 @@ class MemoryModelProvider extends VirtualModelProvider
     {
         $result = [];
 
+        // @TODO order implementation
+        $limit = 9999;
+        if (isset($config['limit'])) {
+            $limit = $config['limit'];
+        }
+
         foreach ($this->memoryStorage[$modelClass] as $item) {
             $isMatch = true;
 
@@ -88,6 +94,11 @@ class MemoryModelProvider extends VirtualModelProvider
                 switch ($whereConfig[0]) {
                     case 'all':
                         $isMatch = $isMatch && true;
+                        break;
+                    case 'in':
+                        if (!in_array($item[$whereConfig[1]], $whereConfig[2])) {
+                            $isMatch = $isMatch && false;
+                        }
                         break;
                     case '=':
                         if ($item[$whereConfig[1]] != $whereConfig[2]) {
@@ -104,6 +115,10 @@ class MemoryModelProvider extends VirtualModelProvider
                 } else {
                     $result[] = $item;
                 }
+            }
+
+            if (count($result) >= $limit) {
+                break;
             }
         }
 
