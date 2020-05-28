@@ -40,9 +40,12 @@ class VirtualModelManager
 
     /**
      * @param VirtualModelProvider $provider
+     * @return VirtualModelManager
      */
     public function setProvider(VirtualModelProvider $provider)
     {
         $this->provider[$provider->type()] = $provider;
+
+        return $this;
     }
 }
