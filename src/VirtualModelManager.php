@@ -41,9 +41,19 @@ class VirtualModelManager
     /**
      * @param VirtualModelProvider $provider
      * @return VirtualModelManager
+     * @throws \Exception
      */
     public function setProvider(VirtualModelProvider $provider)
     {
+        $providerClass = $provider->type();
+
+        if (interface_exists($providerClass)) {
+            if (!$provider instanceof $providerClass) {
+                $realProviderClass = get_class($provider);
+                throw new \Exception("Provider $realProviderClass must implement $providerClass");
+            }
+        }
+
         $this->provider[$provider->type()] = $provider;
 
         return $this;
