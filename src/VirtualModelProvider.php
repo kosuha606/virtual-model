@@ -117,4 +117,16 @@ abstract class VirtualModelProvider
     {
         return self::DEFAULT_PROVIDER_TYPE;
     }
+
+    /**
+     * Провайдер может вернуть набор классов о которых ему известно
+     * это может быть полезно для поддержки массовых операций над
+     * одними и темиже типами моеделей
+     *
+     * @return array
+     */
+    public function getAvailableModelClasses()
+    {
+        return [];
+    }
 }
