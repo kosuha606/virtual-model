@@ -16,7 +16,10 @@ abstract class VirtualModelProvider
     /**
      * @return string
      */
-    abstract public function environemnt(): string;
+    public function environemnt()
+    {
+        return 'storage';
+    }
 
     /**
      * @var array
@@ -26,11 +29,11 @@ abstract class VirtualModelProvider
     /**
      * @param $modelClass
      * @param array $attributes
-     * @return VirtualModel
+     * @return VirtualModelEntity
      */
     public function buildModel($modelClass, $attributes = [])
     {
-        /** @var VirtualModel $instance */
+        /** @var VirtualModelEntity $instance */
         $instance = new $modelClass($this->environemnt());
         $instance->setAttributes($attributes);
 
@@ -40,7 +43,7 @@ abstract class VirtualModelProvider
     /**
      * @param $modelClass
      * @param $config
-     * @return VirtualModel
+     * @return VirtualModelEntity
      */
     public function one($modelClass, $config)
     {
@@ -56,7 +59,10 @@ abstract class VirtualModelProvider
      * @param $config
      * @return mixed
      */
-    abstract protected function findOne($modelClass, $config);
+    protected function findOne($modelClass, $config)
+    {
+        return [];
+    }
 
     /**
      * @param $modelClass
@@ -91,9 +97,12 @@ abstract class VirtualModelProvider
      * @param $config
      * @return mixed
      */
-    abstract protected function findMany($modelClass, $config);
+    protected function findMany($modelClass, $config)
+    {
+        return [];
+    }
 
-    public function persist(VirtualModel $model)
+    public function persist(VirtualModelEntity $model)
     {
         $this->persistedModels[] = $model;
     }
@@ -105,7 +114,7 @@ abstract class VirtualModelProvider
         return null;
     }
 
-    public function delete(VirtualModel $model)
+    public function delete(VirtualModelEntity $model)
     {
         // Delete model
     }

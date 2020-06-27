@@ -2,17 +2,16 @@
 
 namespace kosuha606\VirtualModel\Example\Socials\Model;
 
-use kosuha606\VirtualModel\VirtualModel;
+use kosuha606\VirtualModel\VirtualModelEntity;
 
-class Message extends VirtualModel
+class PostGroup extends VirtualModelEntity
 {
     public function attributes(): array
     {
         return [
             'id',
-            'content',
-            'created_at',
-            'to_user_id',
+            'post_id',
+            'group_id',
         ];
     }
 }

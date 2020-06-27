@@ -2,7 +2,7 @@
 
 namespace kosuha606\VirtualModel\Example;
 
-use kosuha606\VirtualModel\VirtualModel;
+use kosuha606\VirtualModel\VirtualModelEntity;
 use kosuha606\VirtualModel\VirtualModelProvider;
 
 /**
@@ -132,7 +132,7 @@ class MemoryModelProvider extends VirtualModelProvider
     {
         $result = [];
 
-        /** @var VirtualModel $model */
+        /** @var VirtualModelEntity $model */
         foreach ($this->persistedModels as $model) {
             $modelClass = get_class($model);
 
@@ -166,11 +166,11 @@ class MemoryModelProvider extends VirtualModelProvider
     }
 
     /**
-     * @param VirtualModel $model
+     * @param VirtualModelEntity $model
      * @return bool
      * @throws \Exception
      */
-    public function delete(VirtualModel $model)
+    public function delete(VirtualModelEntity $model)
     {
         $modelClass = get_class($model);
 

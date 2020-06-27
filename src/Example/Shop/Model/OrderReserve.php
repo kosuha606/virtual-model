@@ -2,13 +2,13 @@
 
 namespace kosuha606\VirtualModel\Example\Shop\Model;
 
-use kosuha606\VirtualModel\VirtualModel;
+use kosuha606\VirtualModel\VirtualModelEntity;
 
 /**
  * Резерв продуктов в заказах
  * @package kosuha606\Model\iteration2\model
  */
-class OrderReserve extends VirtualModel
+class OrderReserve extends VirtualModelEntity
 {
     public function attributes(): array
     {

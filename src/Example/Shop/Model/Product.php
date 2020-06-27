@@ -4,14 +4,14 @@ namespace kosuha606\VirtualModel\Example\Shop\Model;
 
 
 
-use kosuha606\VirtualModel\VirtualModel;
+use kosuha606\VirtualModel\VirtualModelEntity;
 use kosuha606\VirtualModel\Example\Shop\ServiceManager;
 use kosuha606\VirtualModel\Example\Shop\Services\ProductService;
 
 /**
  * Продукт
  */
-class Product extends VirtualModel
+class Product extends VirtualModelEntity
 {
     /** @var ProductService */
     private $productService;

@@ -2,9 +2,9 @@
 
 namespace kosuha606\VirtualModel\Example\Shop\Model;
 
-use kosuha606\VirtualModel\VirtualModel;
+use kosuha606\VirtualModel\VirtualModelEntity;
 
-class Order extends VirtualModel
+class Order extends VirtualModelEntity
 {
     public function attributes(): array
     {

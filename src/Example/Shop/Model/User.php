@@ -2,13 +2,13 @@
 
 namespace kosuha606\VirtualModel\Example\Shop\Model;
 
-use kosuha606\VirtualModel\VirtualModel;
+use kosuha606\VirtualModel\VirtualModelEntity;
 
 /**
  * Пользователь
  * @package kosuha606\Model\iteration2\model
  */
-class User extends VirtualModel
+class User extends VirtualModelEntity
 {
     public function attributes(): array
     {

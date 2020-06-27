@@ -2,16 +2,16 @@
 
 namespace kosuha606\VirtualModel\Example\Socials\Model;
 
-use kosuha606\VirtualModel\VirtualModel;
+use kosuha606\VirtualModel\VirtualModelEntity;
 
-class Post extends VirtualModel
+class Profile extends VirtualModelEntity
 {
     public function attributes(): array
     {
         return [
             'id',
-            'content',
-            'created_at',
+            'user_id',
+            'about',
         ];
     }
 }

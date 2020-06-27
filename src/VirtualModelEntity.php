@@ -6,7 +6,7 @@ namespace kosuha606\VirtualModel;
  * Одна абстрактная модель
  * @package kosuha606\VirtualModel
  */
-abstract class VirtualModel
+abstract class VirtualModelEntity
 {
     public $isNewRecord = true;
 
@@ -24,7 +24,10 @@ abstract class VirtualModel
      * @description Обязывает установить ключи атрибутов
      * @return array
      */
-    abstract public function attributes(): array;
+    public function attributes(): array
+    {
+        return [];
+    }
 
     /**
      * @return string
@@ -312,6 +315,7 @@ abstract class VirtualModel
     public static function allToArray($items)
     {
         return array_map(function($item) {
+            /** @var VirtualModelEntity $item */
             return $item->toArray();
         }, $items);
     }

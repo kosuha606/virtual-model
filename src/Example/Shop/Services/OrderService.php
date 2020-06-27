@@ -3,7 +3,7 @@
 namespace kosuha606\VirtualModel\Example\Shop\Services;
 
 
-use kosuha606\VirtualModel\VirtualModel;
+use kosuha606\VirtualModel\VirtualModelEntity;
 use kosuha606\VirtualModel\VirtualModelManager;
 use kosuha606\VirtualModel\Example\Shop\Model\OrderReserve;
 use kosuha606\VirtualModel\Example\Shop\Model\Product;

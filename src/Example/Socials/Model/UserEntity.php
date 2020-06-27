@@ -2,9 +2,9 @@
 
 namespace kosuha606\VirtualModel\Example\Socials\Model;
 
-use kosuha606\VirtualModel\VirtualModel;
+use kosuha606\VirtualModel\VirtualModelEntity;
 
-class User extends VirtualModel
+class User extends VirtualModelEntity
 {
     public function attributes(): array
     {
