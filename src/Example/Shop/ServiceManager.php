@@ -41,7 +41,7 @@ class ServiceManager
             $this->services['orderService'],
             $this->services['paymentService'],
             $this->services['deliveryService'],
-            $this->services['promocodeService'],
+            $this->services['promocodeService']
         );
 
         $this->type = $type;
