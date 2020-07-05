@@ -8,8 +8,11 @@ namespace kosuha606\VirtualModel;
  */
 class VirtualModelManager
 {
-    /** @var VirtualModelProvider */
-    private $provider;
+    /** @var VirtualModelProvider[] */
+    private $providers;
+
+    /** @var VirtualModelEntity[] */
+    private static $entities;
 
     private static $instance;
 
@@ -31,11 +34,11 @@ class VirtualModelManager
      */
     public function getProvider($type=VirtualModelProvider::DEFAULT_PROVIDER_TYPE): VirtualModelProvider
     {
-        if (!isset($this->provider[$type])) {
+        if (!isset($this->providers[$type])) {
             throw new \Exception("There is now provider with type $type");
         }
 
-        return $this->provider[$type];
+        return $this->providers[$type];
     }
 
     /**
@@ -54,8 +57,22 @@ class VirtualModelManager
             }
         }
 
-        $this->provider[$provider->type()] = $provider;
+        $this->providers[$provider->type()] = $provider;
 
         return $this;
+    }
+
+    public static function getEntity($class)
+    {
+        if (isset(static::$entities[$class])) {
+            return static::$entities[$class];
+        }
+
+        return $class;
+    }
+
+    public static function setEntities($entities)
+    {
+        static::$entities = $entities;
     }
 }
