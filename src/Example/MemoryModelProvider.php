@@ -25,8 +25,8 @@ class MemoryModelProvider extends VirtualModelProvider
     }
 
     /**
-     * @param $modelClass
-     * @param $config
+     * @param string $modelClass
+     * @param array $config
      * @return array|mixed|null
      */
     protected function findOne($modelClass, $config)
@@ -39,8 +39,8 @@ class MemoryModelProvider extends VirtualModelProvider
     }
 
     /**
-     * @param $modelClass
-     * @param $config
+     * @param string $modelClass
+     * @param array $config
      * @return array|mixed
      */
     protected function findMany($modelClass, $config)
@@ -53,8 +53,8 @@ class MemoryModelProvider extends VirtualModelProvider
     }
 
     /**
-     * @param $modelClass
-     * @param $config
+     * @param string $modelClass
+     * @param array $config
      * @return bool
      */
     private function isCorrectConditions($modelClass, $config)
@@ -72,8 +72,8 @@ class MemoryModelProvider extends VirtualModelProvider
 
     /**
      * Поиск в памяти
-     * @param $modelClass
-     * @param $whereConfig
+     * @param string $modelClass
+     * @param array $config
      * @param bool $isGreedy
      * @return array
      */
@@ -192,8 +192,8 @@ class MemoryModelProvider extends VirtualModelProvider
     }
 
     /**
-     * @param $modelClass
-     * @param $config
+     * @param string $modelClass
+     * @param array $config
      * @return int
      */
     public function count($modelClass, $config)
@@ -206,7 +206,7 @@ class MemoryModelProvider extends VirtualModelProvider
     }
 
     /**
-     * @param $modelClass
+     * @param string $modelClass
      * @return int
      * @throws \Exception
      */

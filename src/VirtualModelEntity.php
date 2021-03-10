@@ -3,6 +3,8 @@
 namespace kosuha606\VirtualModel;
 
 /**
+ * @property int $id
+ *
  * @method static self count($config)
  */
 abstract class VirtualModelEntity
