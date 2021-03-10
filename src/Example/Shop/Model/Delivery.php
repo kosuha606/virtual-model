@@ -7,6 +7,8 @@ use kosuha606\VirtualModel\VirtualModelEntity;
 /**
  * Вариант доставки
  * @package kosuha606\Model\iteration2\model
+ *
+ * @property float $price
  */
 class Delivery extends VirtualModelEntity
 {

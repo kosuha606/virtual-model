@@ -3,8 +3,7 @@
 namespace kosuha606\VirtualModel;
 
 /**
- * Одна абстрактная модель
- * @package kosuha606\VirtualModel
+ * @method static self count($config)
  */
 abstract class VirtualModelEntity
 {
@@ -39,7 +38,7 @@ abstract class VirtualModelEntity
 
     /**
      * @description Установить окружение в слой моделей
-     * @param $environent
+     * @param string $environent
      */
     public function environment($environent)
     {
@@ -137,8 +136,8 @@ abstract class VirtualModelEntity
     }
 
     /**
-     * @param $name
-     * @param $value
+     * @param string $name
+     * @param string $value
      * @throws \Exception
      */
     public function setAttribute($name, $value)
@@ -148,7 +147,7 @@ abstract class VirtualModelEntity
     }
 
     /**
-     * @param $name
+     * @param string $name
      * @return bool
      */
     public function hasAttribute($name)
@@ -199,7 +198,7 @@ abstract class VirtualModelEntity
     }
 
     /**
-     * @param $name
+     * @param string $snakeName
      * @return mixed
      * @throws \Exception
      */
@@ -225,8 +224,8 @@ abstract class VirtualModelEntity
     }
 
     /**
-     * @param $name
-     * @param $value
+     * @param string $snakeName
+     * @param mixed $value
      * @return mixed|null
      * @throws \Exception
      */
@@ -256,7 +255,7 @@ abstract class VirtualModelEntity
     }
 
     /**
-     * @param $name
+     * @param string $name
      * @throws \Exception
      */
     protected function ensureAttributeExists($name)
@@ -271,7 +270,7 @@ abstract class VirtualModelEntity
     }
 
     /**
-     * @param $snakeString
+     * @param string $snakeString
      * @return mixed|string
      */
     public function normalizeEnvMethod($snakeString)
@@ -280,7 +279,7 @@ abstract class VirtualModelEntity
     }
 
     /**
-     * @param $snakeString
+     * @param string $snakeString
      * @return mixed|string
      */
     public function normalizeCommonMethod($snakeString)
@@ -298,6 +297,9 @@ abstract class VirtualModelEntity
         }
     }
 
+    /**
+     * @return array
+     */
     public function toArray()
     {
         $props = get_object_vars($this);
@@ -309,7 +311,7 @@ abstract class VirtualModelEntity
 
     /**
      * Перевести массив объектов в обычный массив
-     * @param $item
+     * @param array $items
      * @return array
      */
     public static function allToArray($items)
@@ -323,7 +325,7 @@ abstract class VirtualModelEntity
     /**
      * Возможность обратиться к методу провайдера из контекста объекта
      * @TODO дублирование с _callStatic
-     * @param $name
+     * @param string $name
      * @param array $inputArgs
      * @return mixed|null
      * @throws \Exception
@@ -348,8 +350,8 @@ abstract class VirtualModelEntity
 
     /**
      * Позволяет вызывать метод провайдера через модель
-     * @param $name
-     * @param $arguments
+     * @param string $name
+     * @param array $inputArgs
      * @return mixed|null
      * @throws \Exception
      */

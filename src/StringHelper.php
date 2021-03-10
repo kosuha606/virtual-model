@@ -2,14 +2,10 @@
 
 namespace kosuha606\VirtualModel;
 
-/**
- * Class StringHelper
- * @package kosuha606\VirtualModel
- */
 class StringHelper
 {
     /**
-     * @param $snakeString
+     * @param string $snakeString
      * @return mixed|string
      */
     public static function normalizeEnvMethod($snakeString, $environment)
@@ -20,7 +16,7 @@ class StringHelper
     }
 
     /**
-     * @param $string
+     * @param string $string
      * @param bool $capitalizeFirstCharacter
      * @return mixed|string
      */

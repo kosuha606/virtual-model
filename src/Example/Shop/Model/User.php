@@ -7,6 +7,8 @@ use kosuha606\VirtualModel\VirtualModelEntity;
 /**
  * Пользователь
  * @package kosuha606\Model\iteration2\model
+ *
+ * @property string $role
  */
 class User extends VirtualModelEntity
 {

@@ -8,7 +8,7 @@ use kosuha606\VirtualModel\Example\Shop\Model\Promocode;
 class PromocodeService
 {
     /**
-     * @param $id
+     * @param int $id
      * @return Promocode
      */
     public function findPromocodeById($id)

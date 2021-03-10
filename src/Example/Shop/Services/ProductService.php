@@ -51,7 +51,7 @@ class ProductService
 
     /**
      * @param Product $product
-     * @param $qty
+     * @param int $qty
      * @return bool
      * @throws \Exception
      */

@@ -27,7 +27,7 @@ abstract class VirtualModelProvider
     protected $persistedModels = [];
 
     /**
-     * @param $modelClass
+     * @param string $modelClass
      * @param array $attributes
      * @return VirtualModelEntity
      */
@@ -41,8 +41,8 @@ abstract class VirtualModelProvider
     }
 
     /**
-     * @param $modelClass
-     * @param $config
+     * @param string $modelClass
+     * @param array $config
      * @return VirtualModelEntity
      */
     public function one($modelClass, $config)
@@ -55,8 +55,8 @@ abstract class VirtualModelProvider
     }
 
     /**
-     * @param $modelClass
-     * @param $config
+     * @param string $modelClass
+     * @param array $config
      * @return mixed
      */
     protected function findOne($modelClass, $config)
@@ -65,8 +65,8 @@ abstract class VirtualModelProvider
     }
 
     /**
-     * @param $modelClass
-     * @param $config
+     * @param string $modelClass
+     * @param array $config
      * @return array
      * @throws \Exception
      */
@@ -93,8 +93,8 @@ abstract class VirtualModelProvider
     }
 
     /**
-     * @param $modelClass
-     * @param $config
+     * @param string $modelClass
+     * @param array $config
      * @return mixed
      */
     protected function findMany($modelClass, $config)

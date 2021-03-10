@@ -2,10 +2,6 @@
 
 namespace kosuha606\VirtualModel;
 
-/**
- * Class EnvironmentModelManager
- * @package kosuha606\VirtualModel
- */
 class VirtualModelManager
 {
     /** @var VirtualModelProvider[] */
@@ -22,7 +18,8 @@ class VirtualModelManager
     public static function getInstance()
     {
         if (!self::$instance) {
-            self::$instance = new static();
+            $className = static::class;
+            self::$instance = new $className();
         }
 
         return self::$instance;

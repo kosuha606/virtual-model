@@ -10,6 +10,10 @@ use kosuha606\VirtualModel\Example\Shop\Services\ProductService;
 
 /**
  * Продукт
+ *
+ * @property int $rests
+ * @property int $id
+ * @property array $actions
  */
 class Product extends VirtualModelEntity
 {
@@ -43,7 +47,7 @@ class Product extends VirtualModelEntity
     /**
      * Проверяет имеются ли свободные остатки по
      * продукту
-     * @param $qty
+     * @param int $qty
      * @return bool
      * @NOTICE Переделал, теперь происходит делегирование логики к дружественному классу-сервису
      * @throws \Exception

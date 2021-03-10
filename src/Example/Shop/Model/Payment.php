@@ -7,6 +7,9 @@ use kosuha606\VirtualModel\VirtualModelEntity;
 /**
  * Вариант оплаты
  * @package kosuha606\Model\iteration2\model
+ * @property int $comission
+ * @property float $price
+ * @property int $amount
  */
 class Payment extends VirtualModelEntity
 {

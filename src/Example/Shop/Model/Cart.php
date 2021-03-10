@@ -38,7 +38,7 @@ class Cart
      */
     public $cartService;
 
-    public function __construct($config = [])
+    public function __construct()
     {
         $this->cartService = ServiceManager::getInstance()->cartService;
     }
@@ -75,7 +75,7 @@ class Cart
     {
         if ($product->hasFreeRests($qty)) {
             $this->items[] = new CartItem([
-                'price' => $product->sale_price,
+                'price' => $product->getSalePrice(),
                 'productId' => $product->id,
                 'qty' => $qty
             ]);

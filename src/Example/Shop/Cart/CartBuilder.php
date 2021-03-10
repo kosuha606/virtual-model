@@ -41,8 +41,8 @@ class CartBuilder
     }
 
     /**
-     * @param $productId
-     * @param $qty
+     * @param int $productId
+     * @param int $qty
      * @throws \Exception
      */
     public function addProductById($productId, $qty)

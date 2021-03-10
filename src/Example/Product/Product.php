@@ -6,10 +6,10 @@ use kosuha606\VirtualModel\VirtualModelEntity;
 use kosuha606\VirtualModel\VirtualModelManager;
 
 /**
- * @property $amount
- * @property $price
- * @property $category_id
- * @property $name
+ * @property int $amount
+ * @property float $price
+ * @property int $category_id
+ * @property string $name
  */
 class Product extends VirtualModelEntity
 {
