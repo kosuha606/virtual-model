@@ -2,7 +2,7 @@
 
 namespace kosuha606\VirtualModel;
 
-use _HumbugBoxbef637b0bf64\Symfony\Component\Console\Exception\LogicException;
+use LogicException;
 
 class VirtualModelProviderDecorator extends VirtualModelProvider
 {
@@ -17,9 +17,9 @@ class VirtualModelProviderDecorator extends VirtualModelProvider
 
     /**
      * @param string $providerType
-     * @param VirtualModelProvider $adaptingProvider
+     * @param mixed $adaptingProvider - Можно передать либо callable либо сам провайдер
      */
-    public function __construct(string $providerType, VirtualModelProvider $adaptingProvider)
+    public function __construct(string $providerType, $adaptingProvider)
     {
         $this->providerType = $providerType;
         $this->adaptingProvider = $adaptingProvider;
@@ -41,6 +41,10 @@ class VirtualModelProviderDecorator extends VirtualModelProvider
      */
     private function translateMethod($name, $arguments)
     {
+        if (is_callable($this->adaptingProvider)) {
+            $this->adaptingProvider = call_user_func($this->adaptingProvider);
+        }
+
         $callback = [$this->adaptingProvider, $name];
 
         if (is_callable($callback)) {
