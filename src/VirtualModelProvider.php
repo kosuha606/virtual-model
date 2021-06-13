@@ -2,39 +2,36 @@
 
 namespace kosuha606\VirtualModel;
 
+use Exception;
+use LogicException;
+
 /**
- * @description Провайдер для работы с сущностями модели
  * @package kosuha606\VirtualModel
  */
 abstract class VirtualModelProvider
 {
-    /**
-     * Тип провайдера по умолчанию
-     */
-    const DEFAULT_PROVIDER_TYPE = 'storage';
+    public const DEFAULT_PROVIDER_TYPE = 'storage';
+
+    private string $lastError;
+    protected array $persistedModels = [];
 
     /**
      * @return string
      */
-    public function environemnt()
+    public function environment(): string
     {
         return 'storage';
     }
-
-    /**
-     * @var array
-     */
-    protected $persistedModels = [];
 
     /**
      * @param string $modelClass
      * @param array $attributes
      * @return VirtualModelEntity
      */
-    public function buildModel($modelClass, $attributes = [])
+    public function buildModel(string $modelClass, array $attributes = []): VirtualModelEntity
     {
         /** @var VirtualModelEntity $instance */
-        $instance = new $modelClass($this->environemnt());
+        $instance = new $modelClass($this->environment());
         $instance->setAttributes($attributes);
 
         return $instance;
@@ -45,7 +42,7 @@ abstract class VirtualModelProvider
      * @param array $config
      * @return VirtualModelEntity
      */
-    public function one($modelClass, $config)
+    public function one(string $modelClass, array $config): VirtualModelEntity
     {
         $attributes = $this->findOne($modelClass, $config);
         $model = $this->buildModel($modelClass, $attributes);
@@ -59,18 +56,21 @@ abstract class VirtualModelProvider
      * @param array $config
      * @return mixed
      */
-    protected function findOne($modelClass, $config)
+    protected function findOne(string $modelClass, array $config): array
     {
+        $this->lastError = $modelClass . ' ' . json_encode($config);
+
         return [];
     }
 
     /**
      * @param string $modelClass
      * @param array $config
+     * @param null $indexBy
      * @return array
-     * @throws \Exception
+     * @throws Exception
      */
-    public function many($modelClass, $config, $indexBy = null)
+    public function many(string $modelClass, array $config, $indexBy = null): array
     {
         $attributesArray = $this->findMany($modelClass, $config);
         $result = [];
@@ -81,7 +81,7 @@ abstract class VirtualModelProvider
 
             if ($indexBy) {
                 if (!isset($attributes[$indexBy])) {
-                    throw new \Exception("No such attribute $indexBy for index in provider");
+                    throw new Exception("No such attribute $indexBy for index in provider");
                 }
                 $result[$attributes[$indexBy]] = $model;
             } else {
@@ -97,8 +97,10 @@ abstract class VirtualModelProvider
      * @param array $config
      * @return mixed
      */
-    protected function findMany($modelClass, $config)
+    protected function findMany(string $modelClass, array $config): array
     {
+        $this->lastError = $modelClass . ' ' . json_encode($config);
+
         return [];
     }
 
@@ -114,27 +116,26 @@ abstract class VirtualModelProvider
         return null;
     }
 
+    /**
+     * @param VirtualModelEntity $model
+     */
     public function delete(VirtualModelEntity $model)
     {
-        // Delete model
+        throw new LogicException('Not implemented' . get_class($model));
     }
 
     /**
      * @return string
      */
-    public function type()
+    public function type(): string
     {
         return self::DEFAULT_PROVIDER_TYPE;
     }
 
     /**
-     * Провайдер может вернуть набор классов о которых ему известно
-     * это может быть полезно для поддержки массовых операций над
-     * одними и темиже типами моеделей
-     *
      * @return array
      */
-    public function getAvailableModelClasses()
+    public function getAvailableModelClasses(): array
     {
         return [];
     }

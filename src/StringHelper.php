@@ -6,13 +6,12 @@ class StringHelper
 {
     /**
      * @param string $snakeString
+     * @param string $environment
      * @return mixed|string
      */
-    public static function normalizeEnvMethod($snakeString, $environment)
+    public static function normalizeEnvMethod(string $snakeString, string $environment): string
     {
-        $camelString = self::snakeToCamel($snakeString.'_'.$environment);
-
-        return $camelString;
+        return self::snakeToCamel($snakeString.'_'.$environment);
     }
 
     /**
@@ -20,7 +19,7 @@ class StringHelper
      * @param bool $capitalizeFirstCharacter
      * @return mixed|string
      */
-    public static function snakeToCamel($string, $capitalizeFirstCharacter = false)
+    public static function snakeToCamel(string $string, bool $capitalizeFirstCharacter = false): string
     {
         $result = str_replace('_', '', ucwords($string, '_'));
 

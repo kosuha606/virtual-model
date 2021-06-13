@@ -2,20 +2,20 @@
 
 namespace kosuha606\VirtualModel;
 
+use Exception;
+
 class VirtualModelManager
 {
     /** @var VirtualModelProvider[] */
-    private $providers;
-
+    private array $providers;
     /** @var VirtualModelEntity[] */
-    private static $entities;
-
-    private static $instance;
+    private static array $entities;
+    private static VirtualModelManager $instance;
 
     /**
      * @return static
      */
-    public static function getInstance()
+    public static function getInstance(): VirtualModelManager
     {
         if (!self::$instance) {
             $className = static::class;
@@ -26,13 +26,14 @@ class VirtualModelManager
     }
 
     /**
+     * @param string $type
      * @return VirtualModelProvider
-     * @throws \Exception
+     * @throws Exception
      */
-    public function getProvider($type=VirtualModelProvider::DEFAULT_PROVIDER_TYPE): VirtualModelProvider
+    public function getProvider(string $type = VirtualModelProvider::DEFAULT_PROVIDER_TYPE): VirtualModelProvider
     {
         if (!isset($this->providers[$type])) {
-            throw new \Exception("There is now provider with type $type");
+            throw new Exception("There is now provider with type $type");
         }
 
         return $this->providers[$type];
@@ -41,16 +42,16 @@ class VirtualModelManager
     /**
      * @param VirtualModelProvider $provider
      * @return VirtualModelManager
-     * @throws \Exception
+     * @throws Exception
      */
-    public function setProvider(VirtualModelProvider $provider)
+    public function setProvider(VirtualModelProvider $provider): VirtualModelManager
     {
         $providerClass = $provider->type();
 
         if (interface_exists($providerClass)) {
             if (!$provider instanceof $providerClass) {
                 $realProviderClass = get_class($provider);
-                throw new \Exception("Provider $realProviderClass must implement $providerClass");
+                throw new Exception("Provider $realProviderClass must implement $providerClass");
             }
         }
 
@@ -59,13 +60,17 @@ class VirtualModelManager
         return $this;
     }
 
-    public static function getEntity($class)
+    /**
+     * @param string $class
+     * @return VirtualModelEntity
+     */
+    public static function getEntity(string $class): VirtualModelEntity
     {
         if (isset(static::$entities[$class])) {
             return static::$entities[$class];
         }
 
-        return $class;
+        return new $class;
     }
 
     public static function setEntities($entities)

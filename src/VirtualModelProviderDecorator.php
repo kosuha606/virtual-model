@@ -6,18 +6,13 @@ use LogicException;
 
 class VirtualModelProviderDecorator extends VirtualModelProvider
 {
-    /** @var VirtualModelProvider провайдер который будем адаптировать */
-    private $adaptingProvider;
-
-    /** @var string класс провадйреа адаптируемого */
-    private $adaptingProviderClass;
-
-    /** @var string тип провадера */
-    private $providerType;
+    private VirtualModelProvider $adaptingProvider;
+    private string $adaptingProviderClass;
+    private string $providerType;
 
     /**
      * @param string $providerType
-     * @param mixed $adaptingProvider - Можно передать либо callable либо сам провайдер
+     * @param mixed $adaptingProvider
      */
     public function __construct(string $providerType, $adaptingProvider)
     {
@@ -29,7 +24,7 @@ class VirtualModelProviderDecorator extends VirtualModelProvider
     /**
      * @return string
      */
-    public function type()
+    public function type(): string
     {
         return $this->providerType;
     }
@@ -39,7 +34,7 @@ class VirtualModelProviderDecorator extends VirtualModelProvider
      * @param $arguments
      * @return false|mixed
      */
-    private function translateMethod($name, $arguments)
+    private function translateMethod($name, $arguments): bool
     {
         if (is_callable($this->adaptingProvider)) {
             $this->adaptingProvider = call_user_func($this->adaptingProvider);
@@ -61,7 +56,7 @@ class VirtualModelProviderDecorator extends VirtualModelProvider
      * @param $arguments
      * @return false|mixed
      */
-    public function __call($name, $arguments)
+    public function __call($name, $arguments): bool
     {
         return $this->translateMethod($name, $arguments);
     }
@@ -71,7 +66,7 @@ class VirtualModelProviderDecorator extends VirtualModelProvider
      * @param array $attributes
      * @return false|VirtualModelEntity|mixed
      */
-    public function buildModel($modelClass, $attributes = [])
+    public function buildModel(string $modelClass, array $attributes = []): VirtualModelEntity
     {
         return $this->translateMethod('buildModel', [
             'modelClass' => $modelClass,
@@ -84,7 +79,7 @@ class VirtualModelProviderDecorator extends VirtualModelProvider
      * @param array $config
      * @return false|VirtualModelEntity|mixed
      */
-    public function one($modelClass, $config)
+    public function one(string $modelClass, array $config): VirtualModelEntity
     {
         return $this->translateMethod('one', [
             'modelClass' => $modelClass,
@@ -98,7 +93,7 @@ class VirtualModelProviderDecorator extends VirtualModelProvider
      * @param null $indexBy
      * @return array|false|mixed
      */
-    public function many($modelClass, $config, $indexBy = null)
+    public function many(string $modelClass, array $config, $indexBy = null): array
     {
         return $this->translateMethod('many', [
             'modelClass' => $modelClass,
@@ -111,7 +106,7 @@ class VirtualModelProviderDecorator extends VirtualModelProvider
      * @param VirtualModelEntity $model
      * @return false|mixed|void
      */
-    public function persist(VirtualModelEntity $model)
+    public function persist(VirtualModelEntity $model): bool
     {
         return $this->translateMethod('persist', [
             'model' => $model,
@@ -121,7 +116,7 @@ class VirtualModelProviderDecorator extends VirtualModelProvider
     /**
      * @return false|mixed|null
      */
-    public function flush()
+    public function flush(): ?bool
     {
         return $this->translateMethod('flush', []);
     }
@@ -130,14 +125,14 @@ class VirtualModelProviderDecorator extends VirtualModelProvider
      * @param VirtualModelEntity $model
      * @return false|mixed|void
      */
-    public function delete(VirtualModelEntity $model)
+    public function delete(VirtualModelEntity $model): bool
     {
         return $this->translateMethod('delete', [
             'model' => $model,
         ]);
     }
 
-    public function getAvailableModelClasses()
+    public function getAvailableModelClasses(): array
     {
         return $this->translateMethod('getAvailableModelClasses', []);
     }

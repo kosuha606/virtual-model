@@ -19,7 +19,7 @@ class MemoryModelProvider extends VirtualModelProvider
     /**
      * @return string
      */
-    public function environemnt(): string
+    public function environment(): string
     {
         return 'mem';
     }
@@ -29,7 +29,7 @@ class MemoryModelProvider extends VirtualModelProvider
      * @param array $config
      * @return array|mixed|null
      */
-    protected function findOne($modelClass, $config)
+    protected function findOne(string $modelClass, array $config)
     {
         if (!$this->isCorrectConditions($modelClass, $config)) {
             return null;
@@ -43,7 +43,7 @@ class MemoryModelProvider extends VirtualModelProvider
      * @param array $config
      * @return array|mixed
      */
-    protected function findMany($modelClass, $config)
+    protected function findMany(string $modelClass, array $config)
     {
         if (!$this->isCorrectConditions($modelClass, $config)) {
             return [];

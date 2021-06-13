@@ -2,27 +2,19 @@
 
 namespace kosuha606\VirtualModel;
 
+use Exception;
+
 /**
  * @property int $id
- *
  * @method static self count($config)
  */
 abstract class VirtualModelEntity
 {
-    public $isNewRecord = true;
+    public bool $isNewRecord = true;
+    protected string $environment = 'db';
+    protected array $attributes = [];
 
     /**
-     * @var string
-     */
-    protected $environment = 'db';
-
-    /**
-     * @var array
-     */
-    protected $attributes = [];
-
-    /**
-     * @description Обязывает установить ключи атрибутов
      * @return array
      */
     public function attributes(): array
@@ -33,26 +25,25 @@ abstract class VirtualModelEntity
     /**
      * @return string
      */
-    public static function providerType()
+    public static function providerType(): string
     {
         return VirtualModelProvider::DEFAULT_PROVIDER_TYPE;
     }
 
     /**
-     * @description Установить окружение в слой моделей
-     * @param string $environent
+     * @param string $environment
      */
-    public function environment($environent)
+    public function environment(string $environment): void
     {
-        $this->environment = $environent;
+        $this->environment = $environment;
     }
 
     /**
      * @param array $config
      * @return static
-     * @throws \Exception
+     * @throws Exception
      */
-    public static function one($config = [])
+    public static function one($config = []): VirtualModelEntity
     {
         return VirtualModelManager::getInstance()
             ->getProvider(static::providerType())
@@ -62,10 +53,11 @@ abstract class VirtualModelEntity
 
     /**
      * @param array $config
+     * @param null $indexBy
      * @return array
-     * @throws \Exception
+     * @throws Exception
      */
-    public static function many($config = [], $indexBy = null)
+    public static function many(array $config = [], $indexBy = null): array
     {
         return VirtualModelManager::getInstance()
             ->getProvider(static::providerType())
@@ -74,25 +66,24 @@ abstract class VirtualModelEntity
     }
 
     /**
+     * @param array $attributes
      * @return static
-     * @throws \Exception
+     * @throws Exception
      */
-    public static function create($attributes = [])
+    public static function create($attributes = []): VirtualModelEntity
     {
-        $instance = VirtualModelManager::getInstance()->getProvider(static::providerType())->buildModel(
+        return VirtualModelManager::getInstance()->getProvider(static::providerType())->buildModel(
             static::class,
             $attributes
         );
-
-        return $instance;
     }
 
     /**
      * @param array $setAttributes
      * @return array
-     * @throws \Exception
+     * @throws Exception
      */
-    public static function createMany($setAttributes = [])
+    public static function createMany($setAttributes = []): array
     {
         $result = [];
 
@@ -104,21 +95,19 @@ abstract class VirtualModelEntity
     }
 
     /**
-     * @description Конструктор сначала инициализирует атрибуты пустыми
-     * @description значениями, а потом заполняет атрибуты данными для окружения
-     * @throws \Exception
+     * @param string $environment
+     * @throws Exception
      */
     public function __construct($environment = 'db')
     {
         $this->environment = $environment;
         $this->initAttributes();
-        // $this->load();
     }
 
     /**
      * @return array
      */
-    public function getAttributes()
+    public function getAttributes(): array
     {
         return $this->attributes;
     }
@@ -126,7 +115,7 @@ abstract class VirtualModelEntity
     /**
      * @param array $attributes
      */
-    public function setAttributes($attributes)
+    public function setAttributes(array $attributes): void
     {
         if (!$attributes) {
             return;
@@ -140,9 +129,9 @@ abstract class VirtualModelEntity
     /**
      * @param string $name
      * @param string $value
-     * @throws \Exception
+     * @throws Exception
      */
-    public function setAttribute($name, $value)
+    public function setAttribute(string $name, string $value): void
     {
         $this->ensureAttributeExists($name);
         $this->attributes[$name] = $value;
@@ -152,14 +141,13 @@ abstract class VirtualModelEntity
      * @param string $name
      * @return bool
      */
-    public function hasAttribute($name)
+    public function hasAttribute(string $name): bool
     {
         return key_exists($name, $this->attributes);
     }
 
     /**
-     * @description Загрузить данные в атрибуты
-     * @throws \Exception
+     * @throws Exception
      */
     public function load()
     {
@@ -175,10 +163,11 @@ abstract class VirtualModelEntity
     }
 
     /**
-     * @description Сохранить модель
-     * @throws \Exception
+     * @param array $config
+     * @return null
+     * @throws Exception
      */
-    public function save($config = [])
+    public function save(array $config = [])
     {
         $saveMethod = $this->normalizeEnvMethod('save');
 
@@ -192,7 +181,7 @@ abstract class VirtualModelEntity
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     public function delete()
     {
@@ -202,9 +191,9 @@ abstract class VirtualModelEntity
     /**
      * @param string $snakeName
      * @return mixed
-     * @throws \Exception
+     * @throws Exception
      */
-    public function __get($snakeName)
+    public function __get(string $snakeName)
     {
         $this->ensureAttributeExists($snakeName);
         $getterName = $this->normalizeEnvMethod('get_'.$snakeName);
@@ -229,9 +218,9 @@ abstract class VirtualModelEntity
      * @param string $snakeName
      * @param mixed $value
      * @return mixed|null
-     * @throws \Exception
+     * @throws Exception
      */
-    public function __set($snakeName, $value)
+    public function __set(string $snakeName, $value)
     {
         $this->ensureAttributeExists($snakeName);
         $setterName = $this->normalizeEnvMethod('set_'.$snakeName);
@@ -258,16 +247,16 @@ abstract class VirtualModelEntity
 
     /**
      * @param string $name
-     * @throws \Exception
+     * @throws Exception
      */
-    protected function ensureAttributeExists($name)
+    protected function ensureAttributeExists(string $name): void
     {
         if (
             !key_exists($name, $this->attributes) &&
             !property_exists($this, $name)
         ) {
             $envModelName = get_class($this);
-            throw new \Exception("No such attribute $name in env model named $envModelName");
+            throw new Exception("No such attribute $name in env model named $envModelName");
         }
     }
 
@@ -275,7 +264,7 @@ abstract class VirtualModelEntity
      * @param string $snakeString
      * @return mixed|string
      */
-    public function normalizeEnvMethod($snakeString)
+    public function normalizeEnvMethod(string $snakeString): string
     {
         return StringHelper::normalizeEnvMethod($snakeString, $this->environment);
     }
@@ -284,13 +273,13 @@ abstract class VirtualModelEntity
      * @param string $snakeString
      * @return mixed|string
      */
-    public function normalizeCommonMethod($snakeString)
+    public function normalizeCommonMethod(string $snakeString): string
     {
         return StringHelper::snakeToCamel($snakeString);
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     protected function initAttributes()
     {
@@ -302,7 +291,7 @@ abstract class VirtualModelEntity
     /**
      * @return array
      */
-    public function toArray()
+    public function toArray(): array
     {
         $props = get_object_vars($this);
         $result = array_merge($props, $this->getAttributes());
@@ -312,27 +301,24 @@ abstract class VirtualModelEntity
     }
 
     /**
-     * Перевести массив объектов в обычный массив
      * @param array $items
      * @return array
      */
-    public static function allToArray($items)
+    public static function allToArray(array $items): array
     {
-        return array_map(function($item) {
+        return array_map(static function($item) {
             /** @var VirtualModelEntity $item */
             return $item->toArray();
         }, $items);
     }
 
     /**
-     * Возможность обратиться к методу провайдера из контекста объекта
-     * @TODO дублирование с _callStatic
      * @param string $name
      * @param array $inputArgs
      * @return mixed|null
-     * @throws \Exception
+     * @throws Exception
      */
-    public function __call($name, $inputArgs = [])
+    public function __call(string $name, array $inputArgs = [])
     {
         $result = null;
         $arguments = [static::class];
@@ -344,20 +330,19 @@ abstract class VirtualModelEntity
                 $name
             ], $arguments);
         } else {
-            throw new \Exception("No such method $name in related provider");
+            throw new Exception("No such method $name in related provider");
         }
 
         return $result;
     }
 
     /**
-     * Позволяет вызывать метод провайдера через модель
      * @param string $name
      * @param array $inputArgs
      * @return mixed|null
-     * @throws \Exception
+     * @throws Exception
      */
-    public static function __callStatic($name, $inputArgs = [])
+    public static function __callStatic(string $name, array $inputArgs = [])
     {
         $result = null;
         $arguments = [static::class];
@@ -369,7 +354,7 @@ abstract class VirtualModelEntity
                 $name
             ], $arguments);
         } else {
-            throw new \Exception("No such method $name in related provider");
+            throw new Exception("No such method $name in related provider");
         }
 
         return $result;
