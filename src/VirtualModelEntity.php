@@ -47,8 +47,7 @@ abstract class VirtualModelEntity
     {
         return VirtualModelManager::getInstance()
             ->getProvider(static::providerType())
-            ->one(static::class, $config)
-        ;
+            ->do('one', [static::class, $config]);
     }
 
     /**
@@ -61,8 +60,7 @@ abstract class VirtualModelEntity
     {
         return VirtualModelManager::getInstance()
             ->getProvider(static::providerType())
-            ->many(static::class, $config, $indexBy)
-            ;
+            ->do('many', [static::class, $config, $indexBy]);
     }
 
     /**
@@ -72,10 +70,13 @@ abstract class VirtualModelEntity
      */
     public static function create($attributes = []): VirtualModelEntity
     {
-        return VirtualModelManager::getInstance()->getProvider(static::providerType())->buildModel(
-            static::class,
-            $attributes
-        );
+        return VirtualModelManager::getInstance()
+            ->getProvider(static::providerType())
+            ->do('buildModel', [
+                    static::class,
+                    $attributes
+                ]
+            );
     }
 
     /**
@@ -175,9 +176,13 @@ abstract class VirtualModelEntity
             return $this->$saveMethod($config);
         }
 
-        VirtualModelManager::getInstance()->getProvider(static::providerType())->persist($this);
+        VirtualModelManager::getInstance()
+            ->getProvider(static::providerType())
+            ->do('persist', [$this]);
 
-        return VirtualModelManager::getInstance()->getProvider(static::providerType())->flush();
+        return VirtualModelManager::getInstance()
+            ->getProvider(static::providerType())
+            ->do('flush');
     }
 
     /**
@@ -185,7 +190,9 @@ abstract class VirtualModelEntity
      */
     public function delete()
     {
-        VirtualModelManager::getInstance()->getProvider(static::providerType())->delete($this);
+        VirtualModelManager::getInstance()
+            ->getProvider(static::providerType())
+            ->do('delete', [$this]);
     }
 
     /**
@@ -196,13 +203,13 @@ abstract class VirtualModelEntity
     public function __get(string $snakeName)
     {
         $this->ensureAttributeExists($snakeName);
-        $getterName = $this->normalizeEnvMethod('get_'.$snakeName);
+        $getterName = $this->normalizeEnvMethod('get_' . $snakeName);
 
         if (method_exists($this, $getterName)) {
             return $this->$getterName();
         }
 
-        $commonGetterName = $this->normalizeCommonMethod('get_'.$snakeName);
+        $commonGetterName = $this->normalizeCommonMethod('get_' . $snakeName);
         if (method_exists($this, $commonGetterName)) {
             return $this->$commonGetterName();
         }
@@ -223,13 +230,13 @@ abstract class VirtualModelEntity
     public function __set(string $snakeName, $value)
     {
         $this->ensureAttributeExists($snakeName);
-        $setterName = $this->normalizeEnvMethod('set_'.$snakeName);
+        $setterName = $this->normalizeEnvMethod('set_' . $snakeName);
 
         if (method_exists($this, $setterName)) {
             return $this->$setterName($value);
         }
 
-        $commonSetterName = $this->normalizeCommonMethod('set_'.$snakeName);
+        $commonSetterName = $this->normalizeCommonMethod('set_' . $snakeName);
         if (method_exists($this, $commonSetterName)) {
             return $this->$commonSetterName($value);
         }
@@ -306,7 +313,7 @@ abstract class VirtualModelEntity
      */
     public static function allToArray(array $items): array
     {
-        return array_map(static function($item) {
+        return array_map(static function ($item) {
             /** @var VirtualModelEntity $item */
             return $item->toArray();
         }, $items);

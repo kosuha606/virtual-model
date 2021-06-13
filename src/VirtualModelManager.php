@@ -46,7 +46,7 @@ class VirtualModelManager
      */
     public function setProvider(VirtualModelProvider $provider): VirtualModelManager
     {
-        $providerClass = $provider->type();
+        $providerClass = $provider->do('type');
 
         if (interface_exists($providerClass)) {
             if (!$provider instanceof $providerClass) {
@@ -55,7 +55,7 @@ class VirtualModelManager
             }
         }
 
-        $this->providers[$provider->type()] = $provider;
+        $this->providers[$provider->do('type')] = $provider;
 
         return $this;
     }
