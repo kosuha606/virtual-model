@@ -18,11 +18,6 @@ class VirtualModelProviderDecorator extends VirtualModelProvider
         $this->providerType = $providerType;
         $this->adaptingProvider = $adaptingProvider;
         $this->adaptingProviderClass = get_class($this->adaptingProvider);
-        $this->specifyActions([
-            'type' => function() use($providerType) : string {
-                return $providerType;
-            }
-        ], true);
     }
 
     /**
@@ -31,10 +26,13 @@ class VirtualModelProviderDecorator extends VirtualModelProvider
      * @param array $arguments
      * @param bool $exception
      * @return false|mixed|void
-     * @noinspection PhpMissingReturnTypeInspection
      */
     public function do(string $action, array $arguments = [], bool $exception = false)
     {
-        $this->adaptingProvider->do($action, $arguments, $exception);
+        if ($action === 'type') {
+            return $this->providerType;
+        }
+
+        return $this->adaptingProvider->do($action, $arguments, $exception);
     }
 }

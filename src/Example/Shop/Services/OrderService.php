@@ -47,12 +47,10 @@ class OrderService
      */
     public function getOrderReserve()
     {
-        $items = VirtualModelManager::getInstance()->getProvider()->many(OrderReserve::class, [
+        return OrderReserve::many([
             'where' => [
                 ['all']
             ]
         ]);
-
-        return $items;
     }
 }

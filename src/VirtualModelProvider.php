@@ -9,9 +9,10 @@ abstract class VirtualModelProvider
 {
     public const DEFAULT_PROVIDER_TYPE = 'storage';
 
-    use ActionMethodTrait;
-
     protected array $persistedModels = [];
+    protected array $actions = [];
+    protected array $parentActions = [];
+    protected string $lastError = '';
 
     public function __construct()
     {
@@ -42,7 +43,7 @@ abstract class VirtualModelProvider
                 return $model;
             },
 
-            'findOne' => static function (
+            'findOne' => function (
                 string $modelClass, array $config
             ): array {
                 $this->lastError = $modelClass . ' ' . json_encode($config);
@@ -75,7 +76,7 @@ abstract class VirtualModelProvider
                 return $result;
             },
 
-            'findMany' => static function (
+            'findMany' => function (
                 string $modelClass,
                 array $config
             ): array {
@@ -84,11 +85,11 @@ abstract class VirtualModelProvider
                 return [];
             },
 
-            'persist' => static function (VirtualModelEntity $model) {
+            'persist' => function (VirtualModelEntity $model) {
                 $this->persistedModels[] = $model;
             },
 
-            'flush' => static function () {
+            'flush' => function () {
                 $this->persistedModels = [];
 
                 return null;
@@ -106,5 +107,74 @@ abstract class VirtualModelProvider
                 return [];
             }
         ]);
+    }
+
+    /**
+     * @param array $actions
+     * @param bool $merge
+     */
+    public function specifyActions(array $actions, bool $merge = false): void
+    {
+        if ($merge) {
+            $this->parentActions = $this->actions;
+
+            foreach ($actions as $name => $function) {
+                $this->actions[$name] = $function;
+            }
+
+            return;
+        }
+
+        $this->actions = $actions;
+    }
+
+    /**
+     * @param string $action
+     * @return bool
+     */
+    public function has(string $action): bool
+    {
+        return isset($this->actions[$action]);
+    }
+
+    /**
+     * @param string $action
+     * @param array $arguments
+     * @param bool $exception
+     * @return false|mixed
+     * @noinspection PhpMissingReturnTypeInspection
+     */
+    public function do(string $action, array $arguments = [], bool $exception = false)
+    {
+        $this->lastError = '';
+
+        if (!$this->has($action)) {
+            $className = get_class($this);
+            $errorMessage = "Action $action is not defined $className";
+            $this->lastError = $errorMessage;
+
+            if ($exception) {
+                throw new LogicException($errorMessage);
+            }
+
+            return false;
+        }
+
+        return call_user_func_array($this->actions[$action], $arguments);
+    }
+
+    /**
+     * @param string $action
+     * @param array $arguments
+     * @return false
+     * @noinspection PhpMissingReturnTypeInspection
+     */
+    public function doParent(string $action, array $arguments)
+    {
+        if (!isset($this->parentActions[$action])) {
+            return false;
+        }
+
+        return call_user_func_array($this->parentActions[$action], $arguments);
     }
 }
