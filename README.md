@@ -6,4 +6,10 @@
 This is the pattern what can help you to split up 
 your logic from logic of framework.
 
+## Installation
+```bash
+composer require kosuha606/virtual-model
+```
+
+## Documentation
 [VirtualModel Documentation](http://docs.kosuha606.ru/en/2-virtualmodel)
