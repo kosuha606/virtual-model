@@ -31,6 +31,7 @@ class VirtualModelProviderDecorator extends VirtualModelProvider
      * @param array $arguments
      * @param bool $exception
      * @return false|mixed|void
+     * @noinspection PhpMissingReturnTypeInspection
      */
     public function do(string $action, array $arguments = [], bool $exception = false)
     {

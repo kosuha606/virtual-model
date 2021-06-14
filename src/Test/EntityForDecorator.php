@@ -11,7 +11,7 @@ class EntityForDecorator extends VirtualModelEntity
 {
     const KEY = 'adapter';
 
-    public static function providerType()
+    public static function providerType(): string
     {
         return self::KEY;
     }

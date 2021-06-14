@@ -20,7 +20,7 @@ abstract class VirtualModelProvider
                 return self::DEFAULT_PROVIDER_TYPE;
             },
 
-            'buildModel' => static function (
+            'buildModel' => function (
                 string $modelClass,
                 array $attributes = []
             ): VirtualModelEntity {
@@ -31,7 +31,7 @@ abstract class VirtualModelProvider
                 return $instance;
             },
 
-            'one' => static function (
+            'one' => function (
                 string $modelClass,
                 array $config
             ): VirtualModelEntity {
@@ -50,7 +50,7 @@ abstract class VirtualModelProvider
                 return [];
             },
 
-            'many' => static function (
+            'many' => function (
                 string $modelClass,
                 array $config,
                 $indexBy = null

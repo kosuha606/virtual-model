@@ -10,7 +10,7 @@ class VirtualModelManager
     private array $providers;
     /** @var VirtualModelEntity[] */
     private static array $entities;
-    private static VirtualModelManager $instance;
+    private static ?VirtualModelManager $instance = null;
 
     /**
      * @return static
@@ -67,7 +67,7 @@ class VirtualModelManager
     public static function getEntity(string $class): VirtualModelEntity
     {
         if (isset(static::$entities[$class])) {
-            return static::$entities[$class];
+            return new static::$entities[$class];
         }
 
         return new $class;

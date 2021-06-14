@@ -324,23 +324,11 @@ abstract class VirtualModelEntity
      * @param array $inputArgs
      * @return mixed|null
      * @throws Exception
+     * @noinspection PhpMissingReturnTypeInspection
      */
     public function __call(string $name, array $inputArgs = [])
     {
-        $result = null;
-        $arguments = [static::class];
-        $arguments = array_merge($arguments, $inputArgs);
-
-        if (method_exists(VirtualModelManager::getInstance()->getProvider(static::providerType()), $name)) {
-            $result = call_user_func_array([
-                VirtualModelManager::getInstance()->getProvider(static::providerType()),
-                $name
-            ], $arguments);
-        } else {
-            throw new Exception("No such method $name in related provider");
-        }
-
-        return $result;
+        return static::translateToProvider($name, $inputArgs);
     }
 
     /**
@@ -348,18 +336,28 @@ abstract class VirtualModelEntity
      * @param array $inputArgs
      * @return mixed|null
      * @throws Exception
+     * @noinspection PhpMissingReturnTypeInspection
      */
     public static function __callStatic(string $name, array $inputArgs = [])
+    {
+        return static::translateToProvider($name, $inputArgs);
+    }
+
+    /**
+     * @param string $name
+     * @param array $inputArgs
+     * @return false|mixed
+     * @throws Exception
+     * @noinspection PhpMissingReturnTypeInspection
+     */
+    protected static function translateToProvider(string $name, array $inputArgs = [])
     {
         $result = null;
         $arguments = [static::class];
         $arguments = array_merge($arguments, $inputArgs);
 
-        if (method_exists(VirtualModelManager::getInstance()->getProvider(static::providerType()), $name)) {
-            $result = call_user_func_array([
-                VirtualModelManager::getInstance()->getProvider(static::providerType()),
-                $name
-            ], $arguments);
+        if (VirtualModelManager::getInstance()->getProvider(static::providerType())->has($name)) {
+            $result = VirtualModelManager::getInstance()->getProvider(static::providerType())->do($name, $arguments);
         } else {
             throw new Exception("No such method $name in related provider");
         }
