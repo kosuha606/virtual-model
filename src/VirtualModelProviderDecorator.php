@@ -19,8 +19,8 @@ class VirtualModelProviderDecorator extends VirtualModelProvider
         $this->adaptingProvider = $adaptingProvider;
         $this->adaptingProviderClass = get_class($this->adaptingProvider);
         $this->specifyActions([
-            'type' => function(): string {
-                return $this->providerType;
+            'type' => function() use($providerType) : string {
+                return $providerType;
             }
         ], true);
     }
